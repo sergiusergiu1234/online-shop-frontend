@@ -1,6 +1,6 @@
 import { Button, Card} from "react-bootstrap";
 import '../Styles/AdvertCard.css';
-import { Link } from "react-router-dom";
+
 export type AdvertCardType={
     text:string,
     imgSrc:string,
@@ -14,10 +14,10 @@ const AdvertCard = ({ text, imgSrc, linkTo, filter }: AdvertCardType) => {
   }
   
     return (
-      <Link  className="card-container"  to={linkTo} onClick={handleClick}>
+      <a  className="card-container"  href={linkTo} onClick={handleClick}>
         <img src={imgSrc}  className="card-image" />
         <label className="card-text">{text}</label>
-      </Link>
+      </a>
     );
   };
 export default AdvertCard;
