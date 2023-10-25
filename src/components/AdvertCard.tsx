@@ -14,10 +14,10 @@ const AdvertCard = ({ text, imgSrc, linkTo, filter }: AdvertCardType) => {
   }
   
     return (
-      <a  className="card-container"  href={linkTo} onClick={handleClick}>
+      <div  className="card-container"   onClick={handleClick}>
         <img src={imgSrc}  className="card-image" />
         <label className="card-text">{text}</label>
-      </a>
+      </div>
     );
   };
 export default AdvertCard;

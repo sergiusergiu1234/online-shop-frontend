@@ -85,9 +85,10 @@ video{
 }
 
 
-.advert2{
-  width: 100vw;
-  height: 150px;
+.advert2 {
+  display: block !important;
+  width: 100vw !important;
+  height: 150px !important;
 }
 
 .video2{
