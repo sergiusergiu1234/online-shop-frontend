@@ -94,10 +94,11 @@ const LoginPage = () => {
         </p>
     
         <Form onSubmit={handleSubmit} className="inputs">
-        <h1>Sign In</h1>
+        <h1 className="title">Sign In</h1>
             <InputGroup className="mb-3">
-                <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                <InputGroup.Text className="basic-addon">@</InputGroup.Text>
                 <Form.Control
+                className="username-field"
                 placeholder="Username"
                 type="text"
                 id="username"
@@ -105,6 +106,7 @@ const LoginPage = () => {
                 onChange={(e) => setUser(e.target.value)}
                 value={user}
                 required
+                
                 />
             </InputGroup>
             <InputGroup className="mb-3">
@@ -122,7 +124,7 @@ const LoginPage = () => {
             <Button variant="success" type="submit">Sign In</Button>
             <p>
                         Don't have an account? <br />
-                        <a href="/Register">Sign Up</a>
+                        <a className="signup-ref" href="/Register">Sign Up</a>
                     </p>
                     </Form>
                     <div className='ribbon'></div>
