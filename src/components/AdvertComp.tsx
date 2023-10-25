@@ -9,7 +9,7 @@ import gogglesPromo from "../assets/images/goggles-promo.jpeg"
 
 const AdvertComp = () => {
     return (
-    <div className="advert-container">
+    <div>
         <div className="advert" >
             <AdvertCard key={1} imgSrc={snowboardPromo} text="Snowboards" filter="Snowboard" linkTo="/"/>
             <AdvertCard key={2} imgSrc={bootsPromo} text="Boots" linkTo="/" filter="Boots"/>

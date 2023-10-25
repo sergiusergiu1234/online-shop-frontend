@@ -37,7 +37,7 @@ const HomePage = () => {
       <AdvertComp/>      
  
       
-      <div className="advert2">
+      <div >
         <video className="video2" controls={false} disablePictureInPicture={true}  autoPlay loop muted>
             <source src={promo2} type="video/mp4" />
             Your browser does not support the video tag.
