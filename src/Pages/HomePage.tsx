@@ -1,7 +1,7 @@
-import React from "react";
+
 import "../Styles/HomePage.css";
 import { Button, Form } from "react-bootstrap";
-import Carousel from "react-bootstrap/Carousel";
+
 
 import { useNavigate } from "react-router";
 
