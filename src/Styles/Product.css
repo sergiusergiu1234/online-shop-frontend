@@ -1,0 +1,30 @@
+.product-container{
+  height: 300px;
+  width: 200px;
+  margin-bottom: 130px;
+  justify-self: center;
+  border: 2px solid rgb(219, 219, 219);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.product-image-container{
+  height: 75%;
+}
+.product-card-image{
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+.card-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 15%;
+
+}
+.productName{
+  font-weight: bold;
+}

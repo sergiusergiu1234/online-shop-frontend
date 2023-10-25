@@ -1,0 +1,16 @@
+.advert-container{
+    width: 100vw;
+}
+.advert{
+    display: flex;
+    flex-direction: row;
+   margin-top: 20px;
+   margin-bottom: 20px;;
+  }
+
+  @media screen and (max-width: 1110px) {
+    .advert{
+        flex-direction: column;
+
+    }
+  }

@@ -1,0 +1,14 @@
+.manageProducts-page label,
+.manageProducts-page hr,
+.manageProducts-page h2{
+   color: black;
+}
+.manageProducts-page{
+   background-color: rgb(135, 135, 135);
+}
+.floating {
+   margin-bottom: 5px;
+}
+.floating label{
+   margin-bottom: 10px;
+}

@@ -1,0 +1,32 @@
+.sumar-container{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+.continue-button{
+    all: unset;
+    display: flex;
+    align-items: center;
+    width: 40%;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(237, 95, 0);
+    color: white;
+    font-weight: bolder;
+}
+.continue-button:hover{
+    background-color: orange;
+}
+.detail{
+    font-weight: bold;
+}
+.total{
+    font-weight: bolder;
+    font-size: x-large;
+}
+.sumar-body{
+    display: flex;
+    flex-direction: column;
+}

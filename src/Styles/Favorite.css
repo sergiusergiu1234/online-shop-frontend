@@ -1,0 +1,83 @@
+
+.favorite-item{
+display: flex;
+flex-direction: row;
+justify-content: center;
+width: 100%;
+border-style: solid;
+border-radius: 15px;
+padding: 15px;
+background-color: #fff;
+background-size: cover;
+margin: 2%;
+}
+.favorite-item label{
+    all:unset;
+    font-size: larger;
+    font-weight: bolder;
+
+}
+
+.favorite-image img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-right: 10px;
+    transition: opacity 0.5s ease;
+}
+.favorite-image :hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+.product-details{
+    min-width: 38vw;
+}
+.product-details h6{
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 0;
+   
+}
+.product-details p{
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.favorite-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+.addToCart{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #5eb2f7;
+    color: #fff;
+    border-radius:5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+   
+}
+
+.addToCart:hover{
+    background-color: #0059ff;
+}
+.delete-favorite{
+    all: unset;
+    display:flex;
+    flex-direction: row;
+    align-self:flex-end;
+    align-items: center;
+    margin-top: 10px;
+    color: red;
+}
+.delete-favorite label{
+    text-align: right;
+    margin-right: 10px;
+}
+.delete-favorite :hover{
+    text-decoration-line: underline;
+    cursor: pointer;
+}

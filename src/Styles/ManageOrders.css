@@ -1,0 +1,22 @@
+.manage-orders-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+  }
+  
+  .order-accordion {
+    width: 50%;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .accordion-button {
+    margin: 0;
+  }
+
+  .manage-orders-actions{
+    
+  }

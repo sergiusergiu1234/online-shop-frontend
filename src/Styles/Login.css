@@ -1,0 +1,44 @@
+.login-container{
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(white, black) 100% 25%;
+    background-repeat: no-repeat;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    width: 30%;
+    height: 80vh;
+ 
+}
+
+Button{
+    margin: 2%;
+}
+
+p{
+    font-size: larger;
+}
+.login-container p,
+.login-container label,
+
+.login-container h2,
+.login-container h3,
+.login-container h4,
+.login-container h5,
+.login-container h6{
+  color: black;
+  font-size: large;
+}
+.login-container h1{
+    color: black;
+}

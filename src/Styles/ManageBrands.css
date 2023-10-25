@@ -1,0 +1,38 @@
+.manage-brands-page{
+  background-color: rgb(135, 135, 135);
+}
+.manage-brands-page h2{
+    color:black;
+}
+.brands-table {
+    border-collapse: collapse;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .brands-table th,
+  .brands-table td {
+    border: 1px solid #fff;
+    padding: 8px;
+  }
+  
+  .brands-table th {
+    background-color: #222;
+  }
+  
+  .brands-table td {
+    background-color: #444;
+  }
+  .actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly
+
+  }
+
+.actions :hover{
+    color:red;
+    cursor: pointer;
+}
+

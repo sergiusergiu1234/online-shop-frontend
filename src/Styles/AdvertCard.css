@@ -1,0 +1,42 @@
+.card-container {
+  height: 480px;
+  width: 400px;
+  margin: 1vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+  overflow: hidden; /* Hide overflow to prevent content from overflowing during zoom */
+  .card-image {
+    z-index: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    filter: brightness(0.7);
+    transition: transform 0.3s ease;
+  }
+  
+  .card-text {
+    z-index: 1;
+    position: absolute;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 40px;
+  }
+}
+
+.card-container:hover .card-text{
+  cursor: pointer;
+}
+.card-container:hover .card-image {
+  transform: scale(1.05); /* Zoom in the image by 10% on hover */
+}
+@media screen and (max-width: 1110px) {
+  .card-container{  
+    width: 100vw;
+    height: 15vh;
+    margin: 0;
+    margin-bottom: 2vh;
+  }
+}

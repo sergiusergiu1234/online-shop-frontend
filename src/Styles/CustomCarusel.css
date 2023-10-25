@@ -1,0 +1,18 @@
+.carusel-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 100px;
+    width: 600px;
+}
+
+.carusel-items-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width:100%;
+}
+.image{
+    height: 100%;
+}
+

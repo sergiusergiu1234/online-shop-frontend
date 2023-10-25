@@ -1,0 +1,44 @@
+.orderDetails-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.link{
+    color: blue; /* Change the text color to blue */
+    text-decoration: none; /* Remove default underline */
+  }
+
+  .link:hover {
+    text-decoration: underline; /* Underline the link when hovering */
+    cursor: pointer;
+  }
+  
+  .sect{
+    width: 50%;
+  }
+.order-details-page{
+  background-color: rgb(135, 135, 135);
+  background-size: cover;
+  height: 100vp;
+}
+  .cash-check{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .continue{
+    all: unset;
+    display: flex;
+    align-items: center;
+    width: 15%;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(237, 95, 0);
+    color: white;
+    font-weight: bolder;
+    margin: 20px;
+}
+.continue:hover{
+    background-color: orange;
+}

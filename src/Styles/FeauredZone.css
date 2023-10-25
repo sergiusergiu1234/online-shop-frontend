@@ -1,0 +1,38 @@
+.featured-zone{
+    display: flex;
+    flex-direction: row;
+    
+}
+.carusel{
+    max-width: 60vw;
+    max-height: 200px;
+    overflow: hidden;
+    
+}
+
+.featured-image{
+    height:200px;
+    object-fit: cover;
+    
+}
+.control-icon{
+    color: red;
+    font-size: 40px;
+}
+.carousel-control-prev,
+.carousel-control-next{
+    width: 5%;
+}
+.hstack{
+    margin-left:20px;
+    margin-right: 20px;
+}
+.card{
+    border: none;
+}
+@media screen and (max-width: 960px) {
+    .carousel-control-prev,
+    .carousel-control-next{
+        width: 10%;
+    }
+}

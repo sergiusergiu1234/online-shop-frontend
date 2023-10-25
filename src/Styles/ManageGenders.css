@@ -1,0 +1,10 @@
+.manage-genders-page{
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgb(135, 135, 135);
+}
+
+.manage-genders-page h2{
+    color: black;
+}

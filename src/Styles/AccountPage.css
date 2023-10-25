@@ -1,0 +1,38 @@
+.account-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 100vw;
+}
+.issued-orders-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+.order{
+    width: 90%
+}
+.order-collapsed{
+    width: 50vw;
+    .details{
+        width: 100%;
+    }
+}
+
+  .small-title{
+    font-size: 1.5rem;
+  }
+  .accordion-body {
+     padding:0
+  }
+  @media screen and (max-width: 960px) {
+    .order-collapsed{
+        width: 95vw;
+        .details{
+            width: 100%;
+        }
+    }
+  }

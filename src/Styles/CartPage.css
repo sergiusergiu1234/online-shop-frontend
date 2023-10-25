@@ -1,0 +1,26 @@
+.cartPage{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(white, black) 100% 25%;
+
+}
+.cartContent{
+  display: flex;
+  flex-direction: row;
+}
+.cartPage h1,h5,label{
+  color: black;
+}
+.cartList{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    margin-left: 10%;
+  }
+  .sumar-comanda{
+    width: 100%;
+  }
