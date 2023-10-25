@@ -6,7 +6,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
   overflow: hidden; /* Hide overflow to prevent content from overflowing during zoom */
   .card-image {
     z-index: 0;
@@ -16,7 +15,6 @@
     filter: brightness(0.7);
     transition: transform 0.3s ease;
   }
-  
   .card-text {
     z-index: 1;
     position: absolute;
@@ -25,7 +23,6 @@
     font-size: 40px;
   }
 }
-
 .card-container:hover .card-text{
   cursor: pointer;
 }

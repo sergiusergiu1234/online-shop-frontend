@@ -15,9 +15,7 @@ margin: 2%;
     all:unset;
     font-size: larger;
     font-weight: bolder;
-
 }
-
 .favorite-image img{
     width: 100px;
     height: 100px;
@@ -58,9 +56,7 @@ margin: 2%;
     border-radius:5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-   
 }
-
 .addToCart:hover{
     background-color: #0059ff;
 }

@@ -1,15 +1,12 @@
 .featured-zone{
     display: flex;
     flex-direction: row;
-    
 }
 .carusel{
     max-width: 60vw;
     max-height: 200px;
     overflow: hidden;
-    
 }
-
 .featured-image{
     height:200px;
     object-fit: cover;

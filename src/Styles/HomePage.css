@@ -3,7 +3,6 @@
   flex-direction: column;
 justify-content: center;
 align-items: center;
-  
 }
 .small-bar{
   display: flex;
@@ -21,9 +20,6 @@ align-items: center;
    font-size: small;
    
  }
-
-
-
 .shop-now-button{
   background-color: white;
   border: 2px solid black;
@@ -34,26 +30,20 @@ align-items: center;
   justify-content: center;
   font-size: 30px;
   font-weight: bolder;
-    
-
 }
 .shop-now-button:hover{
     background-color: black;
     color: white;
     border: 2px solid rgb(255, 0, 0);
 }
-
 .contact-us-container{
   width: 100vw;
   background-color: black;
 }
-
-
 video{
   height: 90vh;
   object-fit: cover;
   filter: brightness(0.5);
-  
 }
  .content{
   position: absolute;
@@ -65,7 +55,6 @@ video{
   align-items: center;
   z-index: 500;
  }
-
  .titles{
   color: white;
     display: flex;
@@ -78,19 +67,15 @@ video{
     font-family: 'Orbitron', sans-serif;
     font-weight: bolder;
  }
-
 .sepparator{
   width: 100vw;
   height: 5vw;
 }
-
-
 .advert2 {
-  display: block !important;
-  width: 100vw !important;
-  height: 150px !important;
+  display: block;
+  width: 100vw;
+  height: 150px;
 }
-
 .video2{
   height: 100%;
   width: 100vw;
@@ -102,15 +87,12 @@ video{
   .small-bar{
     font-size: 0.5rem;
   }
-
 }
 @media screen and (max-width: 500px)  {
   h1{
     font-size: 3rem;
   }
-
 }
-
   @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
   @import url('https://fonts.google.com/specimen/Russo+One');
 

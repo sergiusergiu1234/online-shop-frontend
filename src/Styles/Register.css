@@ -1,10 +1,8 @@
-
 .page{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
 }
 .page label,
 .page h2,
@@ -26,14 +24,12 @@ section{
   align-items: center;
   justify-content: center;
 }
-
 .form{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
 input[type="text"],
 input[type="password"],
 button,
@@ -43,7 +39,6 @@ textarea{
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
-
 .instructions {
     font-size: 0.75rem;
     border-radius: 0.5rem;
@@ -53,22 +48,18 @@ textarea{
     position: relative;
     bottom: -10px;
   }
-  
   .offscreen {
     position: absolute;
     left: -9999px;
   }
-  
   .valid {
     color: limegreen;
     margin-left: 0.25rem;
   }
-  
   .invalid {
     color: red;
     margin-left: 0.25rem;
   }
-  
   .errmsg {
     background-color: lightpink;
     color: firebrick;

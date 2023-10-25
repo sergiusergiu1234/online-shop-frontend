@@ -2,18 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 .link{
     color: blue; /* Change the text color to blue */
     text-decoration: none; /* Remove default underline */
   }
-
   .link:hover {
     text-decoration: underline; /* Underline the link when hovering */
     cursor: pointer;
   }
-  
   .sect{
     width: 50%;
   }
