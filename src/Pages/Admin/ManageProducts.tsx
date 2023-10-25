@@ -65,7 +65,7 @@ const ManageProducts = () => {
   //get products from db and set field states
   const fetchProducts = () => {
     if(auth.accessToken){
-      fetch(`http://localhost:8080/products/${localStorage.getItem("selectedName")}`)
+      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${localStorage.getItem("selectedName")}`)
       .then((response) => response.json())
       .then((data) => {
        let selectedIndex = localStorage.getItem("at");
@@ -143,7 +143,7 @@ const ManageProducts = () => {
     ) {
       if (selectedFile) {
         const createProductReponse = await fetch(
-          "http://localhost:8080/products/admin/add",
+          "https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/add",
           {
             method: "POST",
             headers: {
@@ -180,7 +180,7 @@ const ManageProducts = () => {
       formData.append("file", selectedFile);
       const token = localStorage.getItem("accessToken");
       const response = await fetch(
-        `http://localhost:8080/products/admin/add-image/${productId}`,
+        `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/add-image/${productId}`,
         {
           method: "POST",
           headers: {
@@ -243,7 +243,7 @@ const ManageProducts = () => {
 
       const token = localStorage.getItem("accessToken");
       const response = await fetch(
-        "http://localhost:8080/productAttributes/admin/add",
+        "https://slope-emporium-app-b7686b574df7.herokuapp.com/productAttributes/admin/add",
         {
           method: "POST",
           headers: {
@@ -272,7 +272,7 @@ const ManageProducts = () => {
 
       const token = localStorage.getItem("accessToken");
       const response = await fetch(
-        "http://localhost:8080/productAttributes/admin/edit",
+        "https://slope-emporium-app-b7686b574df7.herokuapp.com/productAttributes/admin/edit",
         {
           method: "PUT",
           headers: {
@@ -309,7 +309,7 @@ const ManageProducts = () => {
       formData.append("file", selectedFile);
       const token = localStorage.getItem("accessToken");
       const response = await fetch(
-        `http://localhost:8080/products/admin/edit-image/${productId}`,
+        `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/edit-image/${productId}`,
         {
           method: "PUT",
           headers: {

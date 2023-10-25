@@ -30,7 +30,7 @@ const AccountPage = () => {
   useEffect(() => {
     const token = window.localStorage.getItem("accessToken");
 
-    fetch("http://localhost:8080/users/me", {
+    fetch("https://slope-emporium-app-b7686b574df7.herokuapp.com/users/me", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

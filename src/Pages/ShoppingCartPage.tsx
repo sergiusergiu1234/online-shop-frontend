@@ -19,7 +19,7 @@ const ShoppingCartPage =()=>{
 
     useEffect(()=>{
         
-        fetch('http://localhost:8080/shoppingCart',{
+        fetch('https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart',{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -40,7 +40,7 @@ const ShoppingCartPage =()=>{
     },[cartItems]);
 
     const handleAddToCart =(item: CartItemType) =>{
-        fetch(`http://localhost:8080/shoppingCart/add/${item.productId}`, {
+        fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/add/${item.productId}`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ const ShoppingCartPage =()=>{
 
     
     const handleRemoveFromCart = (item: CartItemType) => {
-        fetch(`http://localhost:8080/shoppingCart/delete/${item.productId}`, {
+        fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/delete/${item.productId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -32,7 +32,7 @@ const Favorite =({favorite,handleRemove}:Props)=>{
 
     const addToCart =()=>{
         const token = window.localStorage.getItem('accessToken')
-        fetch(`http://localhost:8080/shoppingCart/add/${favorite.productId}`,{
+        fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/add/${favorite.productId}`,{
             method: 'POST',
             headers: {
                 'Authorization' : `Bearer ${token}`

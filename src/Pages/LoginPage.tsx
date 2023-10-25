@@ -62,7 +62,7 @@ const LoginPage = () => {
             navigate(from, {replace: true});
 
             const token = window.localStorage.getItem('accessToken');
-            fetch('http://localhost:8080/favorites',{
+            fetch('https://slope-emporium-app-b7686b574df7.herokuapp.com/favorites',{
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

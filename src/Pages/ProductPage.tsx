@@ -75,7 +75,7 @@ const ProductPage = () => {
    
     if(auth.accessToken){
     const token = window.localStorage.getItem('accessToken');
-      fetch(`http://localhost:8080/products/${productName}`,{
+      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${productName}`,{
         method: 'GET',
         
         headers: {
@@ -87,7 +87,7 @@ const ProductPage = () => {
       .catch((error) => console.log(error));
     }
     else{
-      fetch(`http://localhost:8080/products/${productName}`)
+      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${productName}`)
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.log(error));
@@ -101,7 +101,7 @@ const ProductPage = () => {
      const token = window.localStorage.getItem('accessToken')
      if(!favorited){
          //send server request
-             fetch(`http://localhost:8080/favorites/add/${selectedProduct.id}`,{
+             fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/favorites/add/${selectedProduct.id}`,{
                  method: 'POST',
                  headers: {
                      'Authorization': `Bearer ${token}`
@@ -112,7 +112,7 @@ const ProductPage = () => {
              })
      }else{
                      //send server request
-                     fetch(`http://localhost:8080/favorites/delete/${selectedProduct.id}`,{
+                     fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/favorites/delete/${selectedProduct.id}`,{
                          method: 'DELETE',
                          headers: {
                              'Authorization': `Bearer ${token}`
@@ -132,7 +132,7 @@ const ProductPage = () => {
     if(auth.accessToken){
       const token = window.localStorage.getItem('accessToken')
    
-      fetch(`http://localhost:8080/shoppingCart/add/${selectedProduct.id}`,{
+      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/add/${selectedProduct.id}`,{
           method: 'POST',
           headers: {
               'Authorization': `Bearer ${token}`
@@ -147,7 +147,7 @@ const ProductPage = () => {
 
   const handleDelete=()=>{
     const token = window.localStorage.getItem('accessToken')
-    fetch(`http://localhost:8080/products/admin/${selectedProduct.id}`,{
+    fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/${selectedProduct.id}`,{
         method: 'DELETE',
         headers: {
             'Authorization' : `Bearer ${token}`
