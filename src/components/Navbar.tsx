@@ -69,7 +69,7 @@ const Navbar = () => {
       
           {isAdmin ?
             <ul className={toggle ? 'nav active' : 'nav'}>
-              <li><Link  className='nav-link'  to={'/'}>Products</Link>   </li>
+              <li><Link  className='nav-link' to={'/products'}>Products</Link>   </li>
               <li><Link  className='nav-link' to='/admin/products'><div>Manage Products</div></Link></li>
               <li><Link  className='nav-link' to='/admin/brands'><div>Manage Brands</div></Link></li>
               <li><Link  className='nav-link' to='/admin/categories'><div>Categories & Types</div></Link></li>
@@ -79,11 +79,11 @@ const Navbar = () => {
             </ul > :
 
             <ul className={toggle ? 'nav active' : 'nav'}>
-              <li><Link onClick={handleToggle} to={'/home'}><div  className='navi-link'><AiOutlineHome />Home</div></Link></li>
-              <li><Link onClick={handleToggle} to={'/'}><div  className='navi-link'>PRODUCTS</div></Link></li>
+              <li><Link onClick={handleToggle} to={'/'}><div  className='navi-link'><AiOutlineHome />Home</div></Link></li>
+              <li><Link onClick={handleToggle} to={'/products'}><div  className='navi-link'>PRODUCTS</div></Link></li>
               <li><Link onClick={handleToggle} to={'/MyAccount'} ><div  className='navi-link'><IoPersonOutline />Account</div></Link></li>
               <li><Link onClick={handleToggle} to={'/Favorites'}><div  className='navi-link'><AiOutlineHeart />Whishlist</div></Link></li>
-              <li><Link  onClick={handleToggle} to={'/ShoppingCart'}><div  className='navi-link'><AiOutlineShoppingCart />Cart</div></Link></li>
+              <li><Link onClick={handleToggle} to={'/ShoppingCart'}><div  className='navi-link'><AiOutlineShoppingCart />Cart</div></Link></li>
             </ul>
 
           }

@@ -55,13 +55,12 @@ function App() {
       <Route path="/" element={<Layout />} >
         <Route path= 'Register' element ={<Register/>} />
         <Route path= 'LoginPage' element ={<LoginPage/>} />
-        <Route path= "Home" element ={<HomePage/>} />
+        <Route path= "" element ={<HomePage/>} />
 
         <Route element={<PersistLogin />} >
           
-          <Route path="" element={<FilterProvider><Products/></FilterProvider>} />
-    
-            <Route path="ProductPage/:id" element={<ProductPage/>} />
+          <Route path="products" element={<FilterProvider><Products/></FilterProvider>} />
+          <Route path="ProductPage/:id" element={<ProductPage/>} />
           <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]}/>}>
             
             <Route path="admin/products" element={<ManageProducts/>}></Route>
