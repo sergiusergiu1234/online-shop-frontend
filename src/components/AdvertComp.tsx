@@ -11,11 +11,11 @@ const AdvertComp = () => {
     return (
     <div>
         <div className="advert" >
-            <AdvertCard key={1} imgSrc={snowboardPromo} text="Snowboards" filter="Snowboard" linkTo="/"/>
-            <AdvertCard key={2} imgSrc={bootsPromo} text="Boots" linkTo="/" filter="Boots"/>
-            <AdvertCard key={3} imgSrc={bindingsPromo} text="Bindings" linkTo="/" filter="Bindings"/>
-            <AdvertCard key={4} imgSrc={helmetsPromo} text="Helmets" linkTo="/" filter="Helmets"/>
-            <AdvertCard key={5} imgSrc={gogglesPromo} text="Goggles" linkTo="/" filter="Goggles"/>
+            <AdvertCard key={1} imgSrc={snowboardPromo} text="Snowboards" filter="Snowboards" linkTo="/products"/>
+            <AdvertCard key={2} imgSrc={bootsPromo} text="Boots" linkTo="/products" filter="Boots"/>
+            <AdvertCard key={3} imgSrc={bindingsPromo} text="Bindings" linkTo="/products" filter="Bindings"/>
+            <AdvertCard key={4} imgSrc={helmetsPromo} text="Helmets" linkTo="/products" filter="Helmets"/>
+            <AdvertCard key={5} imgSrc={gogglesPromo} text="Goggles" linkTo="/products" filter="Goggles"/>
 
         </div>
   </div>)
