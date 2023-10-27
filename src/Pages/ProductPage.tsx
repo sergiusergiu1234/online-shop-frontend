@@ -74,7 +74,7 @@ const ProductPage = () => {
   const fetchProducts = () => {
    
     if(auth.accessToken){
-    const token = window.localStorage.getItem('accessToken');
+    const token = window.sessionStorage.getItem("accessToken");;
       fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${productName}`,{
         method: 'GET',
         
@@ -98,7 +98,7 @@ const ProductPage = () => {
   const addToFavorite = () => {
     //verify if authenticated
     if(auth.accessToken){
-     const token = window.localStorage.getItem('accessToken')
+     const token = window.sessionStorage.getItem("accessToken");
      if(!favorited){
          //send server request
              fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/favorites/add/${selectedProduct.id}`,{
@@ -130,7 +130,7 @@ const ProductPage = () => {
 
   const addToCart = () => {
     if(auth.accessToken){
-      const token = window.localStorage.getItem('accessToken')
+      const token = window.sessionStorage.getItem("accessToken");
    
       fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/add/${selectedProduct.id}`,{
           method: 'POST',
@@ -146,7 +146,7 @@ const ProductPage = () => {
   };
 
   const handleDelete=()=>{
-    const token = window.localStorage.getItem('accessToken')
+    const token = window.sessionStorage.getItem("accessToken");
     fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/${selectedProduct.id}`,{
         method: 'DELETE',
         headers: {

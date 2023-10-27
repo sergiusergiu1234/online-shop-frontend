@@ -28,7 +28,7 @@ const AccountPage = () => {
   const [deliveredOrders, setDeliveredOrders] = useState<OrderType[]>([]);
 
   useEffect(() => {
-    const token = window.localStorage.getItem("accessToken");
+    const token = window.sessionStorage.getItem("accessToken");
 
     fetch("https://slope-emporium-app-b7686b574df7.herokuapp.com/users/me", {
       method: "GET",

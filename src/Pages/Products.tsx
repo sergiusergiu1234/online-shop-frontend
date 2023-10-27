@@ -32,7 +32,7 @@ const HomePage = () => {
     if(type_name) params += `&type_name=${type_name}`;
     if(attributes) params +=`&attributes=${attributes}`
     if(sizes) params += `&sizes=${sizes}`;
-    const token = window.localStorage.getItem('accessToken');
+    const token = window.sessionStorage.getItem("accessToken");;
     const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/products?${params.slice(1)}`;
     console.log(params)
     let response;

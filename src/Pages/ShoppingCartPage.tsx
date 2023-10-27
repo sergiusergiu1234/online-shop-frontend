@@ -12,7 +12,7 @@ import { IconContext } from "react-icons";
 import { VscDebugStart } from "react-icons/vsc";
 const ShoppingCartPage =()=>{
     const [cartItems,setCartItems]=useState<CartItemType[]>([]);
-    const token = window.localStorage.getItem('accessToken');
+    const token = window.sessionStorage.getItem("accessToken");;
     const [totalPrice,setTotalPrice]= useState(0);
     const {order, setOrder} = useContext(OrderContext);
     const [isValid, setIsValid] = useState(true);

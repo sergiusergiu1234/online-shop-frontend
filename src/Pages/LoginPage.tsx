@@ -47,9 +47,9 @@ const LoginPage = () => {
             const accessToken = response?.data?.token; 
             let roles = response?.data?.role;
             //save login response to local storage 
-            await  window.localStorage.setItem("accessToken", accessToken);
-            await  window.localStorage.setItem("roles", roles);
-            await  window.localStorage.setItem("user", user);
+            await  window.sessionStorage.setItem("accessToken", accessToken);
+            await  window.sessionStorage.setItem("roles", roles);
+            await  window.sessionStorage.setItem("user", user);
             
             if (roles) {
                 roles = roles.split(',');
