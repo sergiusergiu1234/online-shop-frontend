@@ -9,9 +9,9 @@ const PersistLogin = ()=>{
     useEffect(()=>{
 
         const verifyStorage = () =>{
-                const accessToken = window.localStorage.getItem("accessToken");
-                const roles = window.localStorage.getItem("roles")?.split(",");
-                const user = window.localStorage.getItem("user");
+                const accessToken = window.sessionStorage.getItem("accessToken");
+                const roles = window.sessionStorage.getItem("roles")?.split(",");
+                const user = window.sessionStorage.getItem("user");
 
                 if(user != null && roles !=null && accessToken !=null){
                     setAuth({user,roles,accessToken})     

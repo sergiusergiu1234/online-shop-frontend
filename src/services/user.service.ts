@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = "localhost:8080/users/"
+const API_URL = "slope-emporium-app-b7686b574df7.herokuapp.com/users/"
 
 class UserService{
     getAdminBoard(){

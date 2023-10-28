@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL= "http://localhost:8080/users/authenticate"
+const API_URL= "https://slope-emporium-app-b7686b574df7.herokuapp.com/users/authenticate"
 
 class AuthService{
     login(username: string, password: string){
@@ -11,13 +11,13 @@ class AuthService{
             })
             .then(response =>{
                 if(response.data.accessToken){
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    sessionStorage.setItem("user", JSON.stringify(response.data));
                 }
                 return response.data;
             });
     }
     logout(){
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
     }
 
     register(username: string,email: string, password:string){
