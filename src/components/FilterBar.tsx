@@ -174,6 +174,12 @@ const FilterBar = () => {
     result = result.slice(0, -1)
     return result;
   }
+
+
+  useEffect(()=>{
+    console.log(`selectedType ${selectedType}`);
+    console.log(possibleValues);
+  },[selectedType])
   return (
     <>
       <Button className=" btn notSelected" onClick={handleShow}>

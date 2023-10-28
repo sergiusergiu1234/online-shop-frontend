@@ -45,7 +45,7 @@ const Navbar = () => {
   },[toggle]);
 
   useEffect(() => {
-    const role = window.localStorage.getItem('roles')
+    const role = window.sessionStorage.getItem('roles')
     // Check if the user has the admin role
     const checkAdminRole = () => {
       if (role) {
