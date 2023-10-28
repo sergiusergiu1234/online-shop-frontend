@@ -12,7 +12,7 @@ import promo2 from "../assets/images/promo2.mp4";
 const HomePage = () => {
   const navigate = useNavigate();
   const goShopping = () => {
-    navigate("/");
+    navigate("/products");
   };
 
   return (
