@@ -65,10 +65,10 @@ const ManageProducts = () => {
   //get products from db and set field states
   const fetchProducts = () => {
     if(auth.accessToken){
-      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${localStorage.getItem("selectedName")}`)
+      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${sessionStorage.getItem("selectedName")}`)
       .then((response) => response.json())
       .then((data) => {
-       let selectedIndex = localStorage.getItem("at");
+       let selectedIndex = sessionStorage.getItem("at");
         setProductId(data.at(selectedIndex).id)
         setProductName(data.at(selectedIndex).name)
         setPrice(data.at(selectedIndex).price)
@@ -79,7 +79,7 @@ const ManageProducts = () => {
         setSelectedBrand(data.at(selectedIndex).brand.name)
         setEditedTypeName(data.at(selectedIndex).category.typeName)
         setAttributeEntries(data.at(selectedIndex).attributes)
-        localStorage.removeItem("selectedName")
+        sessionStorage.removeItem("selectedName")
       })
       .catch((error) => console.log(error));
     }
@@ -98,7 +98,7 @@ const ManageProducts = () => {
     fetchTypes().then((data) => setTypes(data));
     fetchBrands().then((data) => setBrands(data));
     fetchGenders().then((data) => setGenders(data));
-    if(localStorage.getItem('selectedName')){
+    if(sessionStorage.getItem('selectedName')){
         fetchProducts();
     }
   }, []);
@@ -129,7 +129,7 @@ const ManageProducts = () => {
       size: size,
       stock:stock
     };
-    const token = localStorage.getItem("accessToken");
+    const token = sessionStorage.getItem("accessToken");
 
     if (
       price != "" &&
@@ -178,7 +178,7 @@ const ManageProducts = () => {
       console.log(productId);
       const formData = new FormData();
       formData.append("file", selectedFile);
-      const token = localStorage.getItem("accessToken");
+      const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
         `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/add-image/${productId}`,
         {
@@ -241,7 +241,7 @@ const ManageProducts = () => {
         value: attributeValues[index],
       };
 
-      const token = localStorage.getItem("accessToken");
+      const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
         "https://slope-emporium-app-b7686b574df7.herokuapp.com/productAttributes/admin/add",
         {
@@ -270,7 +270,7 @@ const ManageProducts = () => {
         value: attributeValues[index],
       };
 
-      const token = localStorage.getItem("accessToken");
+      const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
         "https://slope-emporium-app-b7686b574df7.herokuapp.com/productAttributes/admin/edit",
         {
@@ -307,7 +307,7 @@ const ManageProducts = () => {
       console.log(productId);
       const formData = new FormData();
       formData.append("file", selectedFile);
-      const token = localStorage.getItem("accessToken");
+      const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
         `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/edit-image/${productId}`,
         {
