@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { OrderType } from "../Types/Order.types";
-import { fetchOrders } from "../api/api";
+import { API_URL, fetchOrders } from "../api/api";
 import Order from "../components/Order";
 import useAuth from "../hooks/useAuth";
 import "../Styles/AccountPage.css";
@@ -30,7 +30,7 @@ const AccountPage = () => {
   useEffect(() => {
     const token = window.sessionStorage.getItem("accessToken");
 
-    fetch("https://slope-emporium-app-b7686b574df7.herokuapp.com/users/me", {
+    fetch(`${API_URL}/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

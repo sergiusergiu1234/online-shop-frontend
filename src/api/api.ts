@@ -1,31 +1,37 @@
+ //export const API_URL = 'http://localhost:8080';
+export const ${API_URL}='https://slope-emporium-app-b7686b574df7.herokuapp.com'
+
+
 export const fetchTypes = async () => {
-    const url = "https://slope-emporium-app-b7686b574df7.herokuapp.com/types/all";
+    const url = `${API_URL}/types/all`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
   };
   export const fetchType = async(categoryName:string)=>{
-    const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/types/admin/get/c=${categoryName}`
+    const url = `${API_URL}/types/admin/get/c=${categoryName}`
     const response = await fetch(url);
     const data = await response.json();
     return data;
   }
   export const fetchGenders = async () => {
-    const url ="https://slope-emporium-app-b7686b574df7.herokuapp.com/genders/all";
+    const url =`${API_URL}/genders/all`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
   };
   
   export const fetchBrands = async () => {
-    const url ="https://slope-emporium-app-b7686b574df7.herokuapp.com/brands/all";
-    const response = await fetch(url);
+    const url =`${API_URL}/brands/all`;
+    const response = await fetch(url,{
+      method: 'GET'
+    });
     const data = await response.json();
     return data;
   };
   
   export const fetchCategories = async () =>{
-    const url = "https://slope-emporium-app-b7686b574df7.herokuapp.com/categories/all";
+    const url = `${API_URL}/categories/all`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
@@ -33,8 +39,8 @@ export const fetchTypes = async () => {
 
 
   export const handleCheckout = async (checkoutData:any) =>{
-    const url ="https://slope-emporium-app-b7686b574df7.herokuapp.com/order/create";
-    const token = sessionStorage.getItem("accessToken");
+    const url =`${API_URL}/order/create`;
+    const token = sessionStorage.getItem(`accessToken`);
     const response = await fetch(url,{
       method: 'POST',
       headers:{
@@ -48,7 +54,7 @@ export const fetchTypes = async () => {
   }
   
 export const getSizes = async (type_id:number) =>{
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/sizes/${type_id}`;
+  const url = `${API_URL}/products/sizes/${type_id}`;
   const response = await fetch(url,{
     method: 'GET'
   });
@@ -58,8 +64,8 @@ export const getSizes = async (type_id:number) =>{
  
 
 export const fetchOrders =async () => {
-  const url = "https://slope-emporium-app-b7686b574df7.herokuapp.com/order";
-  const token = sessionStorage.getItem("accessToken");
+  const url = `${API_URL}/order`;
+  const token = sessionStorage.getItem(`accessToken`);
   const response = await fetch(url,{
     method: 'GET',
     headers:{
@@ -72,8 +78,8 @@ export const fetchOrders =async () => {
 }
 
 export const fetchAllOrders = async ()=>{
-  const url = "https://slope-emporium-app-b7686b574df7.herokuapp.com/order/admin/all";
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/order/admin/all`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch(url,{
     method:'GET',
     headers:{
@@ -85,10 +91,10 @@ export const fetchAllOrders = async ()=>{
 }
 
 export const updatePersonalData = async(selected:string, text:string)=>{
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/users/me/edit/${selected}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/users/me/edit/${selected}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = {
-    "updateText": text
+    'updateText': text
   }
   console.log(url)
   const response = await fetch(url, {
@@ -104,11 +110,11 @@ export const updatePersonalData = async(selected:string, text:string)=>{
 }
 
 export const updateOrderStatus = async(orderId:number | null , newStatus:string) =>{
-  const url = "https://slope-emporium-app-b7686b574df7.herokuapp.com/order/update";
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/order/update`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = {
-    "orderId": orderId,
-    "newStatus": newStatus
+    'orderId': orderId,
+    'newStatus': newStatus
   }
   const response = await fetch (url,{
     method:'PUT',
@@ -123,8 +129,8 @@ export const updateOrderStatus = async(orderId:number | null , newStatus:string)
 }
 
 export const deleteProduct = async (productId:number | null) => {
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/${productId}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/products/admin/${productId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch(url,{
     method: 'DELETE',
     headers:{
@@ -136,10 +142,10 @@ export const deleteProduct = async (productId:number | null) => {
 
 
 export const addBrand = async (brandName: string) => {
-const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/brands/admin/add`;
-const token = sessionStorage.getItem("accessToken");;
+const url = `${API_URL}/brands/admin/add`;
+const token = sessionStorage.getItem(`accessToken`);;
 const requestBody = {
-  "name": brandName
+  'name': brandName
 }
 const response = await fetch(url,{
   method: 'POST',
@@ -154,8 +160,8 @@ return data;
 }
 
 export const deleteBrand = async (brandId:number)=>{
-  const url =`https://slope-emporium-app-b7686b574df7.herokuapp.com/brands/admin/delete/${brandId}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url =`${API_URL}/brands/admin/delete/${brandId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch (url,{
     method:'DELETE',
     headers:{
@@ -167,8 +173,8 @@ export const deleteBrand = async (brandId:number)=>{
   return data;
 }
 export const editBrand = async (brandId:number | null, brandName:string) => {
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/brands/admin/edit/${brandId}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/brands/admin/edit/${brandId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = JSON.stringify({ name: brandName }); 
   try {
     const response = await fetch(url, {
@@ -189,11 +195,11 @@ export const editBrand = async (brandId:number | null, brandName:string) => {
 
 
 export const addCategory = async (categoryName: string,typeId:number | null ) => {
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/categories/admin/add`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/categories/admin/add`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = {
-    "name": categoryName,
-    "typeId": typeId
+    'name': categoryName,
+    'typeId': typeId
   }
   const response = await fetch(url,{
     method: 'POST',
@@ -208,8 +214,8 @@ export const addCategory = async (categoryName: string,typeId:number | null ) =>
   }
 
 export const deleteCategory = async (categoryId:number)=>{
-  const url =`https://slope-emporium-app-b7686b574df7.herokuapp.com/categories/admin/delete/${categoryId}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url =`${API_URL}/categories/admin/delete/${categoryId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch (url,{
     method:'DELETE',
     headers:{
@@ -221,8 +227,8 @@ export const deleteCategory = async (categoryId:number)=>{
 }
 
 export const editCategory = async (categoryId:number | null , categoryName:string)=>{
-const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/categories/admin/edit/${categoryId}`;
-const token = sessionStorage.getItem("accessToken");;
+const url = `${API_URL}/categories/admin/edit/${categoryId}`;
+const token = sessionStorage.getItem(`accessToken`);;
 const requestBody = JSON.stringify({ name: categoryName }); 
 const response = await fetch (url,{
   method:'PUT',
@@ -237,8 +243,8 @@ return data;
 }
 
 export const deleteType = async (typeId:number)=>{
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/types/admin/delete/${typeId}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/types/admin/delete/${typeId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch (url,{
     method:'DELETE',
     headers:{
@@ -250,10 +256,10 @@ export const deleteType = async (typeId:number)=>{
 }
 
 export const addType = async (typeName: string) => {
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/types/admin/add`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/types/admin/add`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = {
-    "name": typeName
+    'name': typeName
   }
   const response = await fetch(url,{
     method: 'POST',
@@ -268,8 +274,8 @@ export const addType = async (typeName: string) => {
   }
 
 export const editType = async (typeName:string,typeId:number | null) =>{
-  const url =`https://slope-emporium-app-b7686b574df7.herokuapp.com/types/admin/edit/${typeId}`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url =`${API_URL}/types/admin/edit/${typeId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
     const requestBody = JSON.stringify({ name: typeName }); 
     const response = await fetch (url,{
       method:'PUT',
@@ -284,11 +290,11 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     }
 
   export const addSize = async (sizeValue:string, typeId:number | null) =>{
-    const url=`https://slope-emporium-app-b7686b574df7.herokuapp.com/size/admin/add`;
-    const token = sessionStorage.getItem("accessToken");;
+    const url=`${API_URL}/size/admin/add`;
+    const token = sessionStorage.getItem(`accessToken`);;
     const requestBody = {
-      "value": sizeValue,
-      "typeId": typeId
+      'value': sizeValue,
+      'typeId': typeId
     }
     const response = await fetch(url,{
       method: 'POST',
@@ -302,8 +308,8 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     return data;
   }
   export const deleteSize = async (sizeId:number |null) =>{
-    const url =`https://slope-emporium-app-b7686b574df7.herokuapp.com/size/admin/delete/${sizeId}`;
-    const token = sessionStorage.getItem("accessToken");;
+    const url =`${API_URL}/size/admin/delete/${sizeId}`;
+    const token = sessionStorage.getItem(`accessToken`);;
     const response = await fetch(url, {
       method: `DELETE`,
       headers:{
@@ -314,11 +320,11 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     return data;
   }
   export const addAttribute = async (attributeName:string , typeId:number | null)=>{
-    const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/attributes/admin/add`;
-    const token = sessionStorage.getItem("accessToken");;
+    const url = `${API_URL}/attributes/admin/add`;
+    const token = sessionStorage.getItem(`accessToken`);;
     const requestBody = {
-      "name": attributeName,
-      "typeId": typeId
+      'name': attributeName,
+      'typeId': typeId
     }
     const response = await fetch(url,{
       method: 'POST',
@@ -333,8 +339,8 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     }
 
     export const editAttribute = async (attributeName: string, attributeId: number | null) =>{
-      const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/attributes/admin/edit/${attributeId}`;
-    const token = sessionStorage.getItem("accessToken");;
+      const url = `${API_URL}/attributes/admin/edit/${attributeId}`;
+    const token = sessionStorage.getItem(`accessToken`);;
     const requestBody = JSON.stringify({ name: attributeName }); 
     const response = await fetch (url,{
       method:'PUT',
@@ -349,8 +355,8 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     }
 
     export const deleteAttribute = async (attributeId: number | null) => {
-   const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/attributes/admin/delete/${attributeId}`;
-  const token = sessionStorage.getItem("accessToken");;
+   const url = `${API_URL}/attributes/admin/delete/${attributeId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch (url,{
     method:'DELETE',
     headers:{
@@ -363,10 +369,10 @@ export const editType = async (typeName:string,typeId:number | null) =>{
    
 
 export const addGender = async (genderName:string) => {
-  const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/genders/admin/add`;
-  const token = sessionStorage.getItem("accessToken");;
+  const url = `${API_URL}/genders/admin/add`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = {
-    "name": genderName
+    'name': genderName
   }
   const response = await fetch(url,{
     method: 'POST',
@@ -381,8 +387,8 @@ export const addGender = async (genderName:string) => {
   }
 
   export const deleteGender = async (genderId:number)=>{
-    const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/genders/admin/${genderId}`;
-    const token = sessionStorage.getItem("accessToken");;
+    const url = `${API_URL}/genders/admin/${genderId}`;
+    const token = sessionStorage.getItem(`accessToken`);;
     const response = await fetch (url,{
       method:'DELETE',
       headers:{
@@ -394,8 +400,8 @@ export const addGender = async (genderName:string) => {
   }
 
   export const editGender = async (genderName: string, genderId: number) =>{
-    const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/genders/admin/edit/${genderId}`;
-  const token = sessionStorage.getItem("accessToken");;
+    const url = `${API_URL}/genders/admin/edit/${genderId}`;
+  const token = sessionStorage.getItem(`accessToken`);;
   const requestBody = JSON.stringify({ name: genderName }); 
   const response = await fetch (url,{
     method:'PUT',

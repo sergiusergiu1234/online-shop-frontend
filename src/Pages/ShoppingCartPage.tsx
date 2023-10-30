@@ -10,6 +10,7 @@ import OrderContext from "../context/OrderDetailsProvider";
 import { useNavigate } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { VscDebugStart } from "react-icons/vsc";
+import { API_URL } from "../api/api";
 const ShoppingCartPage =()=>{
     const [cartItems,setCartItems]=useState<CartItemType[]>([]);
     const token = window.sessionStorage.getItem("accessToken");;
@@ -19,7 +20,7 @@ const ShoppingCartPage =()=>{
 
     useEffect(()=>{
         
-        fetch('https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart',{
+        fetch(`${API_URL}/shoppingCart`,{
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -40,7 +41,7 @@ const ShoppingCartPage =()=>{
     },[cartItems]);
 
     const handleAddToCart =(item: CartItemType) =>{
-        fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/add/${item.productId}`, {
+        fetch(`${API_URL}/shoppingCart/add/${item.productId}`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -59,7 +60,7 @@ const ShoppingCartPage =()=>{
 
     
     const handleRemoveFromCart = (item: CartItemType) => {
-        fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/delete/${item.productId}`, {
+        fetch(`${API_URL}/shoppingCart/delete/${item.productId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -96,15 +97,7 @@ const ShoppingCartPage =()=>{
     return(<div className="cartPage">
             <h1 className="small-title">Shopping cart</h1>
          <div className="cartContent">
-            <div className="cartList">
-            {cartItems.map((cart:CartItemType)=>(
-                <CartItem key={cart.productId} item={cart} addToCart={handleAddToCart}
-                removeFromCart={handleRemoveFromCart}
-                setIsValid={setIsValid}
-                isValid={isValid}/>
-            ))}
-            </div>
-            <div className="sumar-comanda">
+         <div className="sumar-comanda">
                 <SumarComanda total={totalPrice}/>
                 <IconContext.Provider value={{ size: "30px" }}>
             <button className={isValid ? "continue-button" : "invalid-continue" } 
@@ -115,6 +108,15 @@ const ShoppingCartPage =()=>{
             </button>
         </IconContext.Provider>
             </div>
+            <div className="cartList">
+            {cartItems.map((cart:CartItemType)=>(
+                <CartItem key={cart.productId} item={cart} addToCart={handleAddToCart}
+                removeFromCart={handleRemoveFromCart}
+                setIsValid={setIsValid}
+                isValid={isValid}/>
+            ))}
+            </div>
+      
             </div>
         </div>)
 }

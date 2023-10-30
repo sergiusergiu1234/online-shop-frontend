@@ -69,13 +69,14 @@ const Navbar = () => {
       
           {isAdmin ?
             <ul className={toggle ? 'nav active' : 'nav'}>
-              <li><Link  className='nav-link' to={'/products'}>Products</Link>   </li>
-              <li><Link  className='nav-link' to='/admin/products'><div>Manage Products</div></Link></li>
-              <li><Link  className='nav-link' to='/admin/brands'><div>Manage Brands</div></Link></li>
-              <li><Link  className='nav-link' to='/admin/categories'><div>Categories & Types</div></Link></li>
-              <li><Link  className='nav-link' to='/admin/attributes'><div>Mange Attributes</div></Link></li>
-              <li><Link  className='nav-link' to='/admin/genders'><div>Manage Genders</div></Link></li>
-              <li><Link  className='nav-link' to='/admin/orders'><div>Manage Orders</div></Link></li>
+                    
+              <li><Link onClick={handleToggle} className='nav-link' to={'/products'}>Products</Link>   </li>
+              <li><Link onClick={handleToggle} className='nav-link' to='/admin/products'><div>Manage Products</div></Link></li>
+              <li><Link onClick={handleToggle} className='nav-link' to='/admin/brands'><div>Manage Brands</div></Link></li>
+              <li><Link onClick={handleToggle} className='nav-link' to='/admin/categories'><div>Categories & Types</div></Link></li>
+              <li><Link onClick={handleToggle} className='nav-link' to='/admin/attributes'><div>Mange Attributes</div></Link></li>
+              <li><Link onClick={handleToggle} className='nav-link' to='/admin/genders'><div>Manage Genders</div></Link></li>
+              <li><Link onClick={handleToggle} className='nav-link' to='/admin/orders'><div>Manage Orders</div></Link></li>
             </ul > :
 
             <ul className={toggle ? 'nav active' : 'nav'}>

@@ -48,7 +48,7 @@ const FilterBar = () => {
 
   const [sizes, setSizes] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
-  let tp = localStorage.getItem("f");
+  let tp = sessionStorage.getItem("f");
   const handleSearch = () => {
    
       setFilter({
@@ -83,7 +83,7 @@ const FilterBar = () => {
 
   useEffect(() => {
 
-    fetchTypes().then(data => setTypes(data));
+    fetchTypes().then(data => {setTypes(data);console.log(data)});
     fetchGenders().then(data => setGenders(data));
     fetchBrands().then(data => setBrands(data));
   }, []);
@@ -107,7 +107,7 @@ const FilterBar = () => {
       setSelectedType(matchedType);
       setPossibleValues(matchedType.attributeValues);
 
-      localStorage.removeItem("f")
+      sessionStorage.removeItem("f")
     }
   }, [types]);
 

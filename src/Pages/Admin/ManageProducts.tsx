@@ -16,6 +16,7 @@ import { Gender } from "../../Types/Gender.type";
 import { Attribute } from "../../Types/Attribute.types";
 import { Type } from "../../Types/Type.types";
 import {
+  API_URL,
   deleteProduct,
   editAttribute,
   fetchBrands,
@@ -27,7 +28,6 @@ import "../../Styles/ManageProducts.css";
 import { error } from "console";
 import AuthContext from "../../context/AuthProvider";
 import { Entryes } from "../../Types/Entryes.types";
-
 
 const ManageProducts = () => {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -62,24 +62,24 @@ const ManageProducts = () => {
 
   const [size, setSize] = useState<string>("");
   const [editedTypeName,setEditedTypeName] = useState("");
-  //get products from db and set field states
+  //get product da
   const fetchProducts = () => {
     if(auth.accessToken){
-      fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/products/${sessionStorage.getItem("selectedName")}`)
+      fetch(`${API_URL}/products/admin/${localStorage.getItem("selectedProduct")}`)
       .then((response) => response.json())
       .then((data) => {
-       let selectedIndex = sessionStorage.getItem("at");
-        setProductId(data.at(selectedIndex).id)
-        setProductName(data.at(selectedIndex).name)
-        setPrice(data.at(selectedIndex).price)
-        setSize(data.at(selectedIndex).size)
-        setDescription(data.at(selectedIndex).description)
-        setSelectedGender(data.at(selectedIndex).gender.name)
-        setSelectedCategory(data.at(selectedIndex).category.name)
-        setSelectedBrand(data.at(selectedIndex).brand.name)
-        setEditedTypeName(data.at(selectedIndex).category.typeName)
-        setAttributeEntries(data.at(selectedIndex).attributes)
-        sessionStorage.removeItem("selectedName")
+       console.log(data);
+        setProductId(data.id)
+        setProductName(data.name)
+        setPrice(data.price)
+        setSize(data.size)
+        setDescription(data.description)
+        setSelectedGender(data.gender.name)
+        setSelectedCategory(data.category.name)
+        setSelectedBrand(data.brand.name)
+        setEditedTypeName(data.category.typeName)
+        setAttributeEntries(data.attributes)
+      localStorage.removeItem('selectedProduct');
       })
       .catch((error) => console.log(error));
     }
@@ -93,12 +93,11 @@ const ManageProducts = () => {
   };
 
 
-
   useEffect(() => {
     fetchTypes().then((data) => setTypes(data));
     fetchBrands().then((data) => setBrands(data));
     fetchGenders().then((data) => setGenders(data));
-    if(sessionStorage.getItem('selectedName')){
+    if(localStorage.getItem('selectedProduct')){
         fetchProducts();
     }
   }, []);
@@ -119,6 +118,7 @@ const ManageProducts = () => {
 
   const handleSubmit1 = async (event: any) => {
     event.preventDefault();
+    //get all data form fields
     const productData = {
       name: productName.trim(),
       brand_name: selectedBrand,
@@ -131,6 +131,7 @@ const ManageProducts = () => {
     };
     const token = sessionStorage.getItem("accessToken");
 
+    //check if all fields are completed...
     if (
       price != "" &&
       productName != "" &&
@@ -139,40 +140,30 @@ const ManageProducts = () => {
       selectedCategory != "" &&
       description != "" &&
       size != "" &&
-      stock != ""
-    ) {
-      if (selectedFile) {
-        const createProductReponse = await fetch(
-          "https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/add",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(productData),
-          }
-        );
-        if (createProductReponse.ok) {
-          setErrorMessage("Product added succesfully!");
-          setShowSuccess(true);
-          const data = await createProductReponse.json(); 
-          setProductId(data.id);
-            handleFileUpload(data.id);
-        } else {
-          const errorMessage = await createProductReponse.text();
-          setErrorMessage(errorMessage);
-          setShowFail(true);
-        }
-      } else {
-        setErrorMessage("Please add valid file!");
-        setShowFail(true);
-      }
-    }else{
-        setErrorMessage("Complete all fields");
-        setShowFail(true);
-    }   
-  };
+      stock != ""){
+        await fetch(`${API_URL}/products/admin/add`,
+        {
+          method: "POST",
+          headers: {
+             "Content-Type": "application/json",
+             Authorization: `Bearer ${token}`,
+             },
+          body: JSON.stringify(productData),}
+          )
+        .then(async (response)=>{
+            if(response.ok){
+              setErrorMessage("Product added succesfully! Please add image now.");
+              setShowSuccess(true);
+              const data = await response.json();
+              setProductId(data.id);
+              console.log(data)
+            }else{
+              setErrorMessage(JSON.stringify(response));
+              setShowFail(true);
+              console.log()
+            }
+        })}}
+  
   const handleFileUpload = async (productId: number) => {
     if (selectedFile != null) {
       console.log(productId);
@@ -180,7 +171,7 @@ const ManageProducts = () => {
       formData.append("file", selectedFile);
       const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
-        `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/add-image/${productId}`,
+        `${API_URL}/products/admin/add-image/${productId}`,
         {
           method: "POST",
           headers: {
@@ -225,12 +216,7 @@ const ManageProducts = () => {
       }
   },[showFail]);
   
-
-
-
-
-
-
+  //request to add product attributes
   const handleSubmit2 = async (event: any) => {
     event.preventDefault();
 
@@ -243,7 +229,7 @@ const ManageProducts = () => {
 
       const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
-        "https://slope-emporium-app-b7686b574df7.herokuapp.com/productAttributes/admin/add",
+        `${API_URL}/productAttributes/admin/add`,
         {
           method: "POST",
           headers: {
@@ -262,6 +248,8 @@ const ManageProducts = () => {
       }
     });
   };
+
+  //request to update product attributes
   const handleEdit =()=>{
         selectedType?.attributeDtoList.forEach(async (attribute, index) => {
       const attributeRequest = {
@@ -272,7 +260,7 @@ const ManageProducts = () => {
 
       const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
-        "https://slope-emporium-app-b7686b574df7.herokuapp.com/productAttributes/admin/edit",
+        `${API_URL}/productAttributes/admin/edit`,
         {
           method: "PUT",
           headers: {
@@ -291,6 +279,8 @@ const ManageProducts = () => {
       }
     });
   }
+
+  //control file upload component
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     console.log(file);
@@ -302,6 +292,7 @@ const ManageProducts = () => {
     }
   };
 
+  //request to modify the already present image
   const modifyImage = async (productId: number)=>{
     if (selectedFile != null) {
       console.log(productId);
@@ -309,7 +300,7 @@ const ManageProducts = () => {
       formData.append("file", selectedFile);
       const token = sessionStorage.getItem("accessToken");
       const response = await fetch(
-        `https://slope-emporium-app-b7686b574df7.herokuapp.com/products/admin/edit-image/${productId}`,
+        `${API_URL}/products/admin/edit-image/${productId}`,
         {
           method: "PUT",
           headers: {
@@ -520,6 +511,8 @@ const ManageProducts = () => {
           <Button variant="warning" onClick={()=>modifyImage(productId!)}>
             Edit image
           </Button>
+
+          <Button onClick={()=>{productId && handleFileUpload(productId)}}>Add Image</Button>
         </form>
       </section>
       <hr />

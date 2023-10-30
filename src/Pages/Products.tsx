@@ -7,6 +7,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import { Offcanvas } from "react-bootstrap";
 import FilterContext from "../context/FilterProvider";
 import { ProductTypeGeneral } from "../Types/ProductTypeGeneral";
+import { API_URL } from "../api/api";
 
 
 
@@ -33,7 +34,7 @@ const HomePage = () => {
     if(attributes) params +=`&attributes=${attributes}`
     if(sizes) params += `&sizes=${sizes}`;
     const token = window.sessionStorage.getItem("accessToken");;
-    const url = `https://slope-emporium-app-b7686b574df7.herokuapp.com/products?${params.slice(1)}`;
+    const url = `${API_URL}/products?${params.slice(1)}`;
     console.log(params)
     let response;
     if(token != null){
@@ -83,7 +84,7 @@ const HomePage = () => {
       <FilterBar/>
       
       <br/>
-      {/* <Pagination>{paginationItems}</Pagination> */}
+      <Pagination>{paginationItems}</Pagination>
       </div>
    
       <div>

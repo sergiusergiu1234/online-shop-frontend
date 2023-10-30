@@ -23,7 +23,7 @@ const ManageAttributes = ()=>{
     const [sizeValue,setSizeValue] = useState<string>("");
 
     useEffect(()=>{
-        fetchTypes().then((data)=>setTypes(data));
+        fetchTypes().then((data)=>{setTypes(data);console.log(data)});
     },[]);
 
 
@@ -39,6 +39,7 @@ const ManageAttributes = ()=>{
     const handleDelete=(attributeId:number)=>{
         deleteAttribute(attributeId).then((data)=>
         setAttributes((prev)=>prev.filter((attr:Attribute)=> attr.id !== data.id)));
+        window.location.reload();
     }
     
     const handleDeleteSize=(sizeId:number)=>{

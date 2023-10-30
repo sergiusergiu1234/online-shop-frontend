@@ -41,22 +41,19 @@ const Product = ({ product}: Props) => {
     })
   },[])
   return (
-    <div className="product-container">
+    <div  onClick={goToProductDetails} className="product-container">
       <div className="product-image-container">
         {/* <Card.Img  src={imageUrl} */}
-        <img src="./burtonmen1.jpg"
-          onClick={goToProductDetails}
+        <img src={imageUrl}
+         
           className="product-card-image"
         />
       </div>
       <div className="card-details">
-       
           <label className="productName">{product.name} </label>
           <label className="productName">$ {product.price}  </label>
           <label >{product.sizes[0].size} - {product.sizes[product.sizes.length-1].size}</label>
-    
-        
-        
+          <Button  onClick={goToProductDetails} className="go-to-details">Go to details</Button>
       </div>
     </div>
   )
