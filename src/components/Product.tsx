@@ -31,9 +31,13 @@ const Product = ({ product}: Props) => {
 
   const goToProductDetails = () => {
 
-    navigate(`/ProductPage/${product.name}`)
+    navigate(`/ProductPage?name=${product.name}`)
     window.localStorage.setItem("productName", product.name)
-    window.localStorage.setItem("imageUrl", base64String)
+    window.localStorage.setItem("imageUrl", base64String);
+    window.localStorage.setitem("categ",product.category)
+    window.localStorage.setitem("typ",product.category.typeName)
+    window.localStorage.setitem("pric",product.price)
+    window.localStorage.setitem("gend",product.gender)
   }
   useEffect(()=>{
     product.sizes.map((size)=>{

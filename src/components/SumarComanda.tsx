@@ -25,7 +25,7 @@ const SumarComanda = ({total}:Props) =>{
         <label className="detail">Delivery:</label>
         <label></label>
         <label className="total">Total:</label>
-        <label className="total">{total}</label>
+        <label className="total">${total}</label>
         </Card.Body>
         </Card>)
 }

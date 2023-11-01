@@ -18,7 +18,7 @@ const HomePage = () => {
   return (
     <div className="homepage-container">
         <div  className="small-bar">
-          <label>Free shipping for orders over 200$! <a href="">Shop now</a></label>
+          <label>Free shipping for orders over $400! <a href="">Shop now</a></label>
         </div>
         <div className="content">
           <div className="titles">
@@ -44,9 +44,7 @@ const HomePage = () => {
           </video>
       </div>
     
-      <div className="contact-us-container">
-        <Button className="contact-us-button">Contact Us</Button>
-      </div>
+
     </div>
   );
 };

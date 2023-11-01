@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import axios from "../api/axios";
 import { ProductType } from "../Types/ProductType.types";
 import { IconContext } from "react-icons";
 import {
-    AiFillHeart,
+  AiFillHeart,
   AiFillPlusCircle,
   AiOutlineHeart,
-  AiOutlineShoppingCart,
+
 } from "react-icons/ai";
 import "../Styles/ProductPage.css";
 import { error } from "console";
@@ -18,13 +18,13 @@ import useAuth from "../hooks/useAuth";
 import { API_URL } from "../api/api";
 
 
+
 const ProductPage = () => {
   const navigate = useNavigate();
-    const {auth} = useAuth();
-  const productName = window.localStorage.getItem("productName");
+  const { auth } = useAuth();
+  const [searchParams] = useSearchParams();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [edit,setEdit] = useState(false);
-
+  const [edit, setEdit] = useState(false);
   const [products, setProducts] = useState<SpecificProduct[]>([
     {
       id: 0,
@@ -32,20 +32,18 @@ const ProductPage = () => {
       price: 0,
       brand: { id: 0, name: "" },
       gender: { id: 0, name: "" },
-      category: { id: 0, name: "" ,typeName: ""},
+      category: { id: 0, name: "", typeName: "" },
       image: "",
       description: "",
       isFavorite: false,
       attributes: [{ attribute_name: "", value: "" }],
       size: "",
-      stock:0
+      stock: 0
     },
   ]);
 
-  const [selectedProduct, setSelectedProduct] = useState<SpecificProduct>(
-    products.at(0)!
-  );
-  const [favorited,setFavorited] = useState(selectedProduct.isFavorite);
+  const [selectedProduct, setSelectedProduct] = useState<SpecificProduct>(products[0]);
+  const [favorited, setFavorited] = useState(selectedProduct.isFavorite);
 
 
   //convert image data
@@ -61,116 +59,120 @@ const ProductPage = () => {
 
   useEffect(() => {
     fetchProducts();
-    if(auth.accessToken){
+    if (auth.accessToken) {
       setIsAdmin(auth.roles.includes("ROLE_ADMIN"));
     }
   }, []);
 
-  useEffect(()=>{
-    fetchProducts();
+
+  useEffect(() => {
+
     setFavorited(selectedProduct.isFavorite);
     console.log(selectedProduct)
-  },[selectedProduct]);
-  
-  const fetchProducts = () => {
-   
-    if(auth.accessToken){
-    const token = window.sessionStorage.getItem("accessToken");;
-      fetch(`${API_URL}/products/${productName}`,{
+  }, [selectedProduct]);
+  useEffect(() => {
+    setSelectedProduct(products[0]);
+  }, [products])
+  const fetchProducts = async () => {
+
+    if (auth.accessToken) {
+      const token = window.sessionStorage.getItem("accessToken");;
+      fetch(`${API_URL}/products/${searchParams.get('name')}`, {
         method: 'GET',
-        
+
         headers: {
-            'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
-    })
-      .then((response) => response.json())
-      .then((data) =>{ setProducts(data)})
-      .catch((error) => console.log(error));
+      })
+        .then((response) => response.json())
+        .then((data) => { setProducts(data) })
+        .catch((error) => console.log(error));
     }
-    else{
-      fetch(`${API_URL}/products/${productName}`)
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.log(error));
+    else {
+
+      fetch(`${API_URL}/products/${searchParams.get('name')}`)
+        .then((response) => response.json())
+        .then((data) => { setProducts(data); })
+        .catch((error) => console.log(error));
     }
-  
+
   };
 
   const addToFavorite = () => {
     //verify if authenticated
-    if(auth.accessToken){
-     const token = window.sessionStorage.getItem("accessToken");
-     if(!favorited){
-         //send server request
-             fetch(`${API_URL}/favorites/add/${selectedProduct.id}`,{
-                 method: 'POST',
-                 headers: {
-                     'Authorization': `Bearer ${token}`
-                 }
-             })
-             .then(response => response.json())
-             .then(data =>{setFavorited(true);console.log(data)
-             })
-     }else{
-                     //send server request
-                     fetch(`${API_URL}/favorites/delete/${selectedProduct.id}`,{
-                         method: 'DELETE',
-                         headers: {
-                             'Authorization': `Bearer ${token}`
-                         }
-                     })
-                     .then(response => response.json())
-                     .then(data =>{
-                                     setFavorited(false);
-                     })
-     }
-    }else{
-     alert("You must log in first!")
-    }
-  };
-
-  const addToCart = () => {
-    if(auth.accessToken){
+    if (auth.accessToken) {
       const token = window.sessionStorage.getItem("accessToken");
-   
-      fetch(`${API_URL}/add/${selectedProduct.id}`,{
+      if (!favorited) {
+        //send server request
+        fetch(`${API_URL}/favorites/add/${selectedProduct.id}`, {
           method: 'POST',
           headers: {
-              'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
           }
-      })
-      .then(response => response.json())
-      .then(data =>console.log(data))
-    }else{
+        })
+          .then(response => response.json())
+          .then(data => {
+            setFavorited(true); console.log(data)
+          })
+      } else {
+        //send server request
+        fetch(`${API_URL}/favorites/delete/${selectedProduct.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            setFavorited(false);
+          })
+      }
+    } else {
       alert("You must log in first!")
     }
   };
 
-  const handleDelete=()=>{
-    const token = window.sessionStorage.getItem("accessToken");
-    fetch(`${API_URL}/products/admin/${selectedProduct.id}`,{
-        method: 'DELETE',
+  const addToCart = () => {
+    if (auth.accessToken) {
+      const token = window.sessionStorage.getItem("accessToken");
+
+      fetch(`${API_URL}/shoppingCart/add/${selectedProduct.id}`, {
+        method: 'POST',
         headers: {
-            'Authorization' : `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+    } else {
+      alert("You must log in first!")
+    }
+  };
+
+  const handleDelete = () => {
+    const token = window.sessionStorage.getItem("accessToken");
+    fetch(`${API_URL}/products/admin/${selectedProduct.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     })
-    .then(response => response.json())
+      .then(response => response.json())
     window.location.reload();
   }
 
-  const handleAddSize =()=>{
+  const handleAddSize = () => {
     navigate("/admin/products");
-    if(selectedProduct){
-      window.localStorage.setItem('selectedProduct',selectedProduct.id.toString());
-    
+    if (selectedProduct) {
+      window.localStorage.setItem('selectedProduct', selectedProduct.id.toString());
     }
   }
 
 
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(products)
-  },[products])
+  }, [products])
 
 
 
@@ -178,72 +180,73 @@ const ProductPage = () => {
     <Card>
       <CardHeader>
         {
-          isAdmin  ? <> <Button variant="danger" onClick={handleDelete}>Delete product :( </Button>
-                      <Button variant="warning" onClick={handleAddSize} >Edit product :| </Button>
-                     
-          </>: <></> 
+          isAdmin ? <> <Button variant="danger" onClick={handleDelete}>Delete product :( </Button>
+            <Button variant="warning" onClick={handleAddSize} >Edit product :| </Button>
+
+          </> : <></>
         }
+
       </CardHeader>
-      <Card.Body className="product-page-container">
-       
-        <div className="image-container">
-          <Card.Img variant="top" src={imageUrl}/>
-        </div>
-<div className="productDetails">
 
-        {selectedProduct.name=="" ? <p >Select a size</p> : <>
-        <div>
-          <p className="bold">
-            {selectedProduct?.gender.name}'s {selectedProduct?.brand.name}{" "}
-            {selectedProduct?.category.name.toUpperCase()} {selectedProduct.category.typeName}
+      <div className="product-page-container">
+
+        <div className="product-info">
+          <img className="product-image" src={imageUrl} />
+          <div>
+            <div className="product-title">
+              {selectedProduct.gender.name}'s {selectedProduct.brand.name}{" "}
+              {selectedProduct.category.name.toUpperCase()} {selectedProduct.category.typeName}
+              <label className="head-big">{selectedProduct.name}</label>
+              <label className="head-big">${selectedProduct.price}</label>
+            </div >
+            <label className="bold">Product specs:</label>
             <br />
-            <label className="head-big">{selectedProduct.name}</label>
-            <br />
-            <label className="head-big">{selectedProduct.price} RON</label>
-          </p>
+              <table className="specs-table"> 
+                <tbody>
+                    {selectedProduct.attributes.map((product,index) => (
+                        <tr key={index}>
+                          <td >{product.attribute_name}</td>
+                          <td>{` ${product.value}`}</td>
+                        </tr>
+                    ))}   
+                </tbody>
+              </table>
+            <div className="size-buttons">
+              {products.map((product, index) => (
+                <Button key={product.id} className={product.id == selectedProduct.id ? "selected-size" : "not-selected-size"}
+                  onClick={() => { setSelectedProduct(product); }}>
+                  {product.size}
+                </Button>
+              ))}
+            </div>
+            {selectedProduct.name !== "" ? <>
+              <div>
 
-          <div className="aesthetic-bar"></div>
-          <p className="description-container">{selectedProduct.description}</p>
-          <div className="aesthetic-bar"></div>
-          <hr />
-          <label className="bold">Product specs:</label>
-          <br />
-          {selectedProduct.attributes.map((product) => (
-            <>
-              <label className="bold">{product.attribute_name}</label>
-              <label className="head-big">{`: ${product.value}`}</label>
-              <br />
-            </>
-          ))}
-           <div className="product-buttons">
-        <IconContext.Provider value={{ size: "50px" }}>
-          <Button className={favorited ? "favoritedd" : "not-favoritedd"} onClick={addToFavorite}>
-           {favorited ? <AiFillHeart/> :  <AiOutlineHeart />} 
-          </Button>
-            
-            {selectedProduct.stock !== 0 ?           <Button className="cart-button" disabled={selectedProduct.stock===0} onClick={addToCart}>
-            <AiFillPlusCircle />
-            Add to cart
-          </Button> : <label>Out of stock</label>}
 
-        </IconContext.Provider>
-      </div>
-</div>
-        </> }
-        <div>
-   
-          <div className="size-buttons">
-            {products.map((product,index) => (
-              <Button key={product.id}  className={product.id == selectedProduct.id ? "selected-size" : "not-selected-size"}
-                    onClick={()=>{setSelectedProduct(product); }}>
-                {product.size}
-              </Button>
-            ))}
+                <div className="product-buttons">
+                  <IconContext.Provider value={{ size: "50px" }}>
+                    <Button className={ favorited ? `favorited` : `not-favorited`} onClick={addToFavorite}>
+                      {favorited ? <AiFillHeart /> : <AiOutlineHeart />}
+                    </Button>
+
+                    {selectedProduct.stock !== 0 ? <Button className="cart-button" disabled={selectedProduct.stock === 0} onClick={addToCart}>
+                      <AiFillPlusCircle />
+                      Add to cart
+                    </Button> : <label>Out of stock</label>}
+
+                  </IconContext.Provider>
+                </div>
+              </div>
+            </> : <></>}
+
           </div>
         </div>
-        </div>
-      </Card.Body>
-     
+        <p className="product-description">{selectedProduct.description}</p>
+
+
+
+      </div>
+
     </Card>
   );
 };

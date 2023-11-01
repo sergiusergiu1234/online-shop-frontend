@@ -36,11 +36,11 @@ const FavoritesPage =()=>{
     
     return (<div  className="favorite-page">
         <h1 className="small-title">Favorite products</h1>
-        <div>
+       
         {favoriteList.map((favorite:FavoriteType)=>(
             <Favorite key={favorite.productId} favorite={favorite} handleRemove={handleRemove} />
         ))}
-        </div>
+        
     </div>)
 }
 export default FavoritesPage;

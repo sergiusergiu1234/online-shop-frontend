@@ -23,7 +23,8 @@
 .product-card-image {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  max-height: 196.6px;
 }
 
 .card-details {
@@ -46,4 +47,19 @@
 
 .product-container:hover .card-details {
   transform: translateY(0);
+}
+
+.productName{
+  font-weight: 900;
+}
+.productName:hover{
+  cursor: pointer;
+}
+
+.go-to-details{
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  border: 1px solid black ;
+  border-radius: 0;
 }

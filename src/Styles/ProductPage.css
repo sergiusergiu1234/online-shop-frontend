@@ -1,92 +1,44 @@
 .product-page-container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
-.image-container{
-    min-width: 25%;
-    max-height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.product-info{
+  display: flex;
+  flex-direction: row;
 }
-.image-container img {
-    max-height: 100%;
-    object-fit: contain;
-
-  }
+.product-image{
+  height: 400px;
+  max-width: fit-content;
+}
 .product-buttons{
     display: flex;
     flex-direction: row;
 }
-.cart-button,
-.not-favoritedd {
-    background-color: white;
-    border: 2px solid black;
-    color: black;
-    transition: all 0.3s ease;
-    width: 15%;
-    align-items: center;
-    justify-content: center;
+
+.product-title{
+  display: flex;
+  flex-direction: column;
+    font-weight: 700;
+    font-size: 15px;
+}
+.specs-table{
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd; 
+  margin-bottom: 20px; 
+}
+.specs-table td{
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
-.cart-button:hover {
-    background-color: black;
-    color: white;
-    border: 2px solid rgb(255, 0, 0);
+.specs-table tr:nth-child(even){
+  background-color: #f2f2f2;
 }
-.not-favoritedd:hover {
-    background-color: white;
-    color: red;
-    border: 2px solid rgb(255, 0, 0);
+.specs-table tr:hover{
+  background-color: #f5f5f5; 
 }
-.favoritedd {
-    background-color: white;
-    border: 2px solid black;
-    color: red;
-    transition: all 0.3s ease;
-    width: 15%;
-    align-items: center;
-    justify-content: center;
-}
-.favoritedd:hover{
-    background-color: white;
-    border: 2px solid red;
-    color: red;
-    transition: all 0.3s ease;
-    width: 15%;
-    align-items: center;
-    justify-content: center;
-}
-td{
-    text-align: center;
-    vertical-align: middle;
-}
-.bold{
-    font-weight: 700;
-    font-size: 130%;
-}
-.head-big{
-    font-weight: 1000;
-    font-size: 180%;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-style: oblique;
-}
-.description-container{
-    font-weight: 130%;
-    width: 60%;
-}
-.product-page-container hr{
-    all: unset;
-    color: black;
-    width: 100%;
-    color: black;
-}
-.aesthetic-bar {
-    background: linear-gradient(to right, #000000, #ffffff 100%, transparent 70%);
-    height: 20px;
-    width: 100%;
-    margin: 10px 0;
-  }
   .product-page-name{
     color: black;
   }
@@ -108,6 +60,55 @@ td{
   .not-selected-size:hover {
     background-color: black;
   }
-  .productDetails {
-    min-width: 70vw;
+
+  .product-buttons Button{
+    background-color: white;
+    color: black;
+    width: 100px;
+    font-weight: bold;
+    border: 2px black solid;
   }
+  .product-buttons Button:hover{
+    background-color: black;
+  }
+  .favorited{
+    color: red!important;
+  }
+.product-description{
+  width: 80vw;
+  align-self: center;
+}
+
+@media screen and (max-width:650px) {
+  .product-page-container{
+    flex-direction: column;
+
+  }
+
+  .description-container{
+    font-size: 15px;
+    text-align: justify;
+  }
+  .product-image{
+    height: 200px;
+
+  }
+  .product-info{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .specs-table{
+    width: fit-content;
+  justify-self: center;
+  align-self: center;
+  }
+  .size-buttons{
+    display: flex;
+    justify-content: center;
+
+  }
+  .product-buttons{
+    justify-content: center;
+  }
+}

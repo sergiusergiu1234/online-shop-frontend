@@ -126,7 +126,7 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
                 <label className="attribute_name">Quantity: {cartItem.quantity}</label>
                 <label>({cartItem.product.stock} in stock)</label>
                 <br/>
-                <label className="attribute_name">Price: {cartItem.price}</label>
+                <label className="attribute_name">${cartItem.price}</label>
           </div>
           <div className="shoppingCart-buttons">
           <Button className="addToCart" 

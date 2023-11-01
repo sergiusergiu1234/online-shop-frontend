@@ -7,6 +7,7 @@ import '../Styles/Favorite.css';
 import { useNavigate } from "react-router";
 import { IoTrashOutline } from "react-icons/io5";
 import { useEffect } from "react";
+import { API_URL } from "../api/api";
 interface Props{
     favorite:FavoriteType
     handleRemove: (favorite: FavoriteType) => void;
@@ -32,7 +33,7 @@ const Favorite =({favorite,handleRemove}:Props)=>{
 
     const addToCart =()=>{
         const token = window.localStorage.getItem('accessToken')
-        fetch(`https://slope-emporium-app-b7686b574df7.herokuapp.com/shoppingCart/add/${favorite.productId}`,{
+        fetch(`${API_URL}/shoppingCart/add/${favorite.productId}`,{
             method: 'POST',
             headers: {
                 'Authorization' : `Bearer ${token}`
@@ -43,26 +44,30 @@ const Favorite =({favorite,handleRemove}:Props)=>{
 
     return (
     <div className="favorite-item">
-        <div className="favorite-image" onClick={goToProductDetails}>
-            <img src={imageUrl} alt={favorite.productName}  className="scaled-image" />
+        <div className="favorite-info">
+                <img className="favorite-image"
+                    onClick={goToProductDetails}
+                    src={imageUrl}
+                    alt={favorite.productName} />
+            <div className="product-details">
+                <label>{favorite.productName}</label><br/>
+                <label>{favorite.price} RON</label><br/>
+                size:  <label>{favorite.size}</label>
+            </div>
         </div>
-        <div className="product-details">
-            <label>{favorite.productName}</label><br/>
-            <label>{favorite.price} RON</label><br/>
-            size:  <label>{favorite.size}</label>
-        </div>
-        <div >
-            <IconContext.Provider value={{size: '5vh'}}>
+        <div className="favorite-buttons">
+       
                 <button className="addToCart" onClick={addToCart}>
                     <MdAddShoppingCart />
                     <label>Buy</label>
                 </button>
-                </IconContext.Provider>
+               
                 <button className="delete-favorite" onClick={()=>handleRemove(favorite)}>
                   
                         <IoTrashOutline/>
-                        <label>Delete</label>
+                      
                 </button>
+               
         </div>
     </div>)
 }

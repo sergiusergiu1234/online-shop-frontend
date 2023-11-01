@@ -26,6 +26,8 @@ import HomePage from "./Pages/HomePage";
 import { BlurContext, useBlurContext } from "./context/BlurContext";
 import { useState } from "react";
 import { FilterProvider } from "./context/FilterProvider";
+import Footer from "./components/Footer";
+import ContactPage from "./Pages/ContactPge";
 
 
 
@@ -60,7 +62,7 @@ function App() {
         <Route element={<PersistLogin />} >
           
           <Route path="products" element={<FilterProvider><Products/></FilterProvider>} />
-          <Route path="ProductPage/:id" element={<ProductPage/>} />
+          <Route path="ProductPage" element={<ProductPage/>} />
           <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]}/>}>
             
             <Route path="admin/products" element={<ManageProducts/>}></Route>
@@ -86,7 +88,9 @@ function App() {
         </Route>
 
       </Route>
+      <Route path="contact" element={<ContactPage/>}/>
     </Routes>
+    <Footer/>
     </div>  
     </BlurContext.Provider>
    

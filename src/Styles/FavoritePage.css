@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background: linear-gradient(white, black) 100% 25%;
+    background: gray!important;
   }
 .favorite-page h1{
     color: black;
