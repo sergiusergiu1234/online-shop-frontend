@@ -78,9 +78,7 @@
     color: red!important;
   }
 .product-description{
-  width: 100%;
-  align-self: left;
-  
+  width: 90%;
 }
 
 @media screen and (max-width:700px) {
