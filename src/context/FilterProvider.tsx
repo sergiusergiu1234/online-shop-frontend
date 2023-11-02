@@ -16,14 +16,14 @@ export type FilterContent = {
 const FilterContext = createContext<FilterContent>({
     filter:{
         productName: '',
-        brands:[''],
+        brands:[],
         gender: '',
         category_name: '',
         minPrice:'',
         maxPrice:'',
         type_name: "" ,
         attributes:"",
-        sizes:[""]
+        sizes:[]
     },
     setFilter: ()=>{}
 });

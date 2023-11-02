@@ -21,7 +21,7 @@ const FilterBar = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const {setFilter}= useContext(FilterContext);
+ 
 
   const [productName, setProductName] = useState("");
 
@@ -48,9 +48,11 @@ const FilterBar = () => {
 
   const [sizes, setSizes] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
-  let tp = sessionStorage.getItem("f");
+  let tp = localStorage.getItem("f");
+  const isInitialMount = useRef(true);
+  const {setFilter}= useContext(FilterContext);
   const handleSearch = () => {
-   
+  
       setFilter({
         productName:productName,
         brands:selectedBrands,
@@ -58,7 +60,7 @@ const FilterBar = () => {
         category_name: selectedCategory,
         minPrice:minPrice,
         maxPrice:maxPrice,
-        type_name: selectedType?.name || " " ,
+        type_name: selectedType?.name || "" ,
         attributes:mapToString(selectedValues),
         sizes:selectedSizes}
       )
@@ -80,36 +82,24 @@ const FilterBar = () => {
     setSelectedGender('');
     setSelectedSizes([]);
   };
-
+  //after component loaded, we fetch types, gender and brands
   useEffect(() => {
-
-    fetchTypes().then(data => {setTypes(data);console.log(data)});
+    fetchTypes().then(data => {setTypes(data);});
     fetchGenders().then(data => setGenders(data));
     fetchBrands().then(data => setBrands(data));
   }, []);
 
+
+  //after we select  a type, reset category, sizes and atribute values
   useEffect(() => {
     setSelectedCategory('');
     setSelectedValues(new Map());
     if (selectedType !== null)
       getSizes(selectedType.id).then(data => {
-
-        setSizes(data); console.log('äicea'); console.log(data)
+        setSizes(data);
       })
   }, [selectedType]);
 
-  useEffect(() => {
-    const matchedType = types.find(type => type.name === tp);
-    if (matchedType) {
-      setSelectedType(matchedType);
-      setTypeName(matchedType.name);
-      setCategories(matchedType.categoryDtoList);
-      setSelectedType(matchedType);
-      setPossibleValues(matchedType.attributeValues);
-
-      sessionStorage.removeItem("f")
-    }
-  }, [types]);
 
   const handleBrandChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;

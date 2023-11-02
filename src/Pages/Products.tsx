@@ -22,6 +22,7 @@ const HomePage = () => {
 
   const fetchProducts = async ()=>{
     const {productName, brands, gender, category_name, minPrice, maxPrice,type_name,attributes,sizes} = filter;
+    console.log(filter)
     let params ='';
     params += `&pageNumber=${activePage-1}`
     if(productName) params += `&name=${productName}`;
@@ -30,7 +31,11 @@ const HomePage = () => {
     if(category_name) params += `&category_name=${category_name}`;
     if(minPrice) params += `&minPrice=${minPrice}`;
     if(maxPrice) params += `&maxPrice=${maxPrice}`;
-    if(type_name) params += `&type_name=${type_name}`;
+    if(tp){
+      params += `&type_name=${tp}`
+    }else{
+      if(type_name) params += `&type_name=${type_name}`;
+    }
     if(attributes) params +=`&attributes=${attributes}`
     if(sizes) params += `&sizes=${sizes}`;
     const token = window.sessionStorage.getItem("accessToken");;
@@ -50,7 +55,7 @@ const HomePage = () => {
     const data = await response.json();
     setProducts(data.content);
     setTotalPages(data.totalPages)
-    console.log(data.content)
+   
   };
 
   useEffect(()=>{
