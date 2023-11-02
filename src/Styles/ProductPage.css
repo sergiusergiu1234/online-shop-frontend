@@ -3,9 +3,11 @@
     flex-direction: column;
 }
 .product-info{
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px,1fr));
+
 }
+
 .product-image{
   height: 400px;
   max-width: fit-content;
@@ -22,7 +24,7 @@
     font-size: 15px;
 }
 .specs-table{
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   border: 1px solid #ddd; 
   margin-bottom: 20px; 
@@ -60,11 +62,12 @@
   .not-selected-size:hover {
     background-color: black;
   }
-
+  
   .product-buttons Button{
     background-color: white;
     color: black;
-    width: 100px;
+    width: 150px;
+    height: 60px;
     font-weight: bold;
     border: 2px black solid;
   }
@@ -75,11 +78,12 @@
     color: red!important;
   }
 .product-description{
-  width: 80vw;
-  align-self: center;
+  width: 100%;
+  align-self: left;
+  
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width:700px) {
   .product-page-container{
     flex-direction: column;
 
@@ -89,17 +93,22 @@
     font-size: 15px;
     text-align: justify;
   }
-  .product-image{
-    height: 200px;
-
-  }
+ .product-data{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  justify-self: center;
+ }
   .product-info{
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   .specs-table{
-    width: fit-content;
+    width: 90%;
   justify-self: center;
   align-self: center;
   }
@@ -110,5 +119,17 @@
   }
   .product-buttons{
     justify-content: center;
+    width: 90vw;
+  }
+  .product-description{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+
+@media screen and (max-width:960px) {
+  .product-description{
+    padding-left: 20px;
   }
 }

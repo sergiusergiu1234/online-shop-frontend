@@ -192,14 +192,14 @@ const ProductPage = () => {
 
         <div className="product-info">
           <img className="product-image" src={imageUrl} />
-          <div>
+          <div className="product-data">
             <div className="product-title">
               {selectedProduct.gender.name}'s {selectedProduct.brand.name}{" "}
               {selectedProduct.category.name.toUpperCase()} {selectedProduct.category.typeName}
               <label className="head-big">{selectedProduct.name}</label>
               <label className="head-big">${selectedProduct.price}</label>
             </div >
-            <label className="bold">Product specs:</label>
+           
             <br />
               <table className="specs-table"> 
                 <tbody>
@@ -231,7 +231,7 @@ const ProductPage = () => {
 
                     {selectedProduct.stock !== 0 ? <Button className="cart-button" disabled={selectedProduct.stock === 0} onClick={addToCart}>
                       <AiFillPlusCircle />
-                      Add to cart
+                      Cart
                     </Button> : <label>Out of stock</label>}
 
                   </IconContext.Provider>
@@ -240,8 +240,9 @@ const ProductPage = () => {
             </> : <></>}
 
           </div>
+          <p className="product-description">{selectedProduct.description}</p>
         </div>
-        <p className="product-description">{selectedProduct.description}</p>
+        
 
 
 
