@@ -11,6 +11,6 @@ export interface Type {
     categoryDtoList: Category[];
     attributeDtoList: Attribute[];
     attributeValues: AttributeValues;
-    sizeDtoList: Size[];
+    sizeList: Size[];
   }
   

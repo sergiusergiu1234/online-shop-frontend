@@ -86,7 +86,7 @@ const ManageAttributes = ()=>{
                     </td>
                     <td >
                         <IconContext.Provider  value={{size: '30px'}}>
-                        <Button className="edit" onClick={()=>{setTypeId(type.id);setAttributes(type.attributeDtoList);setSizes(type.sizeDtoList)}}><MdOutlineModeEdit /></Button>
+                        <Button className="edit" onClick={()=>{setTypeId(type.id);setAttributes(type.attributeDtoList);setSizes(type.sizeList)}}><MdOutlineModeEdit /></Button>
                         </IconContext.Provider>
                     </td>
                 </tr>)}

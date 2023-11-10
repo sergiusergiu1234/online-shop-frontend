@@ -2,6 +2,7 @@ import { Brand } from "./Brand.types";
 import { Category } from "./Category.types";
 import { Gender } from "./Gender.type";
 import { ProductAttribute } from "./ProductAttribute";
+import { Size } from "./Size.types";
 
 export  type ProductType = {
     id: number;
@@ -15,5 +16,5 @@ export  type ProductType = {
     isFavorite: boolean;
     attributes: ProductAttribute[];
     stock:number;
-    size:string
+  
   };

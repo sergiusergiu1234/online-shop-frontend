@@ -7,7 +7,7 @@ interface Props{
 
 const OrderItem =({item}:Props)=>{
     return(<div className="order-item-container">
-        <label className="product-name">{item.productName}({item.quantity})_size {item.product.size} - {item.price} RON</label>
+        <label className="product-name">{item.productName}({item.quantity}) {item.price} RON</label>
     </div>)
 }
 

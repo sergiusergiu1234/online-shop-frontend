@@ -1,0 +1,15 @@
+.notification-container {
+    position: fixed;
+    top: 20px; /* Adjust the top position as needed */
+    right: 20px; /* Adjust the right position as needed */
+    z-index: 1000; /* Set a higher z-index value to ensure the component appears above other content */
+    width:max-content ;
+  }
+
+  .bg-danger{
+    background-color: red;
+  }
+
+  .bg-success{
+    background-color: greenyellow;
+  }

@@ -46,10 +46,10 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
       isFavorite: item.product.isFavorite,
       attributes: item.product.attributes,
       stock: item.product.stock,
-      size:item.product.size
+      
     },
     stock:item.stock,
-    size:item.product.size
+    
   });
 
   useEffect(() => {
@@ -81,9 +81,9 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
         isFavorite: item.product.isFavorite,
         attributes: item.product.attributes,
         stock: item.product.stock,
-        size:item.product.size
+       
       },stock:item.stock
-      ,size:item.product.size
+ 
     });
   }, [item]);
 
@@ -109,7 +109,7 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
               <label  className="attribute_name">{item.product.brand.name} - {item.product.category.name} - {item.product.category.typeName}</label>
                 <hr/>
                 <label className="attribute_name">Size: </label>
-              <label className="value">{item.product.size}</label>
+              
                 <div className="attr">
                 {item.product.attributes.map((attribute)=>(
                   <div>

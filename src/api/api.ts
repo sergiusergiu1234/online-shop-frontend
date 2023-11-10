@@ -1,5 +1,8 @@
-//export const API_URL = 'http://localhost:8080';
-export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
+import { error } from "console";
+import { Attribute } from "../Types/Attribute.types";
+
+export const API_URL = 'http://localhost:8080';
+//export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
 
 
 export const fetchTypes = async () => {
@@ -251,8 +254,7 @@ export const deleteType = async (typeId:number)=>{
       'Authorization': `Bearer ${token}`
     }
   });
-  const data = await response.json();
-  return data;
+  return response;
 }
 
 export const addType = async (typeName: string) => {
@@ -268,9 +270,8 @@ export const addType = async (typeName: string) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(requestBody)
-  });
-  const data = await response.json();
-  return data;
+  })
+  return response;
   }
 
 export const editType = async (typeName:string,typeId:number | null) =>{
@@ -415,4 +416,78 @@ export const addGender = async (genderName:string) => {
   return data;
   }
 
- 
+  export const createProduct = async (productName:string,brandName:string,genderName:string,categoryName:string,price:string,description:string)=>{
+    const url =`${API_URL}/products/admin/add`;
+    const token = sessionStorage.getItem(`accessToken`);
+    const response = await fetch(url,{
+      method: 'POST',
+      headers:{
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "name": productName,
+        "brand_name": brandName,
+        "gender_name": genderName,
+        "category_name": categoryName,
+        "price": price,
+        "description": description
+      })})
+   const data = await response.json();
+   return data;
+  }
+
+  export const uploadProductImage = async (file:File,productId:number) =>{
+    const token = sessionStorage.getItem("accessToken")
+    const formData = new FormData();
+    formData.append("file",file);
+    const response = await fetch(
+      `${API_URL}/products/admin/add-image/${productId}`,{
+        method: "POST",
+        headers :{
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      }
+    );
+    return response;
+  }
+
+  export const uploadProductAttribute = async(attributeId:number,productId:number,value:string | undefined)=>{
+    const token = sessionStorage.getItem("accessToken");
+          if (value) {
+            const response = await fetch(`${API_URL}/productAttributes/admin/add`, {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                  },
+                  body: JSON.stringify({
+                      "productId": productId,
+                      "attributeId": attributeId,
+                      "value": value,
+                  }),
+              });
+              return response;
+          }  
+      }
+
+export const uploadProductSize = async (sizeId:number,productId:number,stock:number) =>{
+  const token = sessionStorage.getItem("accessToken");
+  const response = await fetch(`${API_URL}/productSizes/newProductSize`,{
+    method: "POST",
+    headers :{
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body : JSON.stringify({
+      "productId" : productId,
+      "sizeId" : sizeId,
+      "stock" : stock
+    })
+  });
+  return response;
+}
+
+
+  

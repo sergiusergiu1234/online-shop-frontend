@@ -7,8 +7,12 @@ import { Button } from "react-bootstrap";
 import "../../Styles/ManageCategories.css";
 import {FloatingLabel, Form} from "react-bootstrap"
 import { Type } from "../../Types/Type.types";
-const ManageCategories = () =>{
+import { useNotifications } from "../../context/NotificationContext";
 
+
+const ManageCategories = () =>{
+    
+    const { addNotification } = useNotifications();
     const [categories,setCategories] = useState<Category[]>([])
     const [categoryId,setCategoryId] = useState<number | null>(null);
     const [categoryName,setCategoryName]= useState('');
@@ -54,26 +58,43 @@ const ManageCategories = () =>{
         })})
     }
 
-    const handleDeleteType=(typeId:number)=>{
+    const handleDeleteType=async (typeId:number)=>{
         const confirmed = window.confirm("Are you sure you want to delete this type?");
         if (confirmed){
-            deleteType(typeId).then((data)=>{
-                setTypes((prev)=>prev.filter((type:Type)=> type.id !== data.id ));
-            });
-            setCategories([]);
+           const response = await deleteType(typeId);
+           if(response.ok){
+                let data = await response.json();
+                setTypes((prev)=> prev.filter((type:Type)=>type.id !== data.id));
+                setCategories([]);
+                addNotification("Type deleted succesfully","success",'Success');
+           }else{
+                addNotification(await response.text(),'danger', 'Something happened');
+           }
         }
     }
 
-    const handleAddType =(event:any) =>{
-        event.preventDefault();
-            addType(typeName).then((data)=> {setTypes((prev) => [...prev, data])});
-    }
 
-    const handleEditType =(event:any) =>{
+    const handleAddType = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+            const response = await addType(typeName);
+            console.log('Full Response Object:', response); // Log the entire response object for inspection
+            if (response.ok) {
+              const responseData = await response.json();
+              setTypes((prev) => [...prev, responseData]);
+              let msg = "Type " + typeName +" added succesfully";
+              addNotification(msg, 'success', 'Success.' );
+            }else{
+                addNotification(await response.text(), 'danger' , 'Something happened.')
+                console.log( await response.text());
+            }
+         
+        };
+
+    const handleEditType =async (event:any) =>{
         event.preventDefault();
         const confirmed = window.confirm("Are you sure you want to edit this type?");
         if (confirmed){
-        editType(typeName,typeId).then((data)=>{setTypes((prev)=> {
+      const response = await  editType(typeName,typeId).then((data)=>{setTypes((prev)=> {
             const updatedTypes= prev.map((type)=>{
                 if(type.id === typeId){
                     return data;
@@ -83,12 +104,15 @@ const ManageCategories = () =>{
             return updatedTypes;
         })
         })
+       
     }
     }
 
-    
+
+
+
+
     return (<div className="manage-categories-page">
-      
         <section className="tables">
             <div className="tab">
         <h3>Categories</h3>

@@ -28,6 +28,8 @@ import { useState } from "react";
 import { FilterProvider } from "./context/FilterProvider";
 import Footer from "./components/Footer";
 import ContactPage from "./Pages/ContactPge";
+import { NotificationContextProvider } from "./context/NotificationContext";
+import NotificationComponent from "./components/NotificationComponent";
 
 
 
@@ -52,8 +54,10 @@ function App() {
       
       
 
-
+    <NotificationContextProvider>
+      <NotificationComponent/>
     < Routes>
+    
       <Route path="/" element={<Layout />} >
         <Route path= 'Register' element ={<Register/>} />
         <Route path= 'LoginPage' element ={<LoginPage/>} />
@@ -67,7 +71,10 @@ function App() {
             
             <Route path="admin/products" element={<ManageProducts/>}></Route>
             <Route path="admin/brands" element={<ManageBrands/>}></Route>
-            <Route path="admin/categories" element={<ManageCategories/>}></Route>
+            
+              <Route path="admin/categories" element={<ManageCategories/>}></Route>
+            
+           
             <Route path="admin/attributes" element={<ManageAttributes/>}></Route>
             <Route path="admin/genders" element={<ManageGenders/>}></Route>
             <Route path="admin/orders" element={<ManageOrders/>}></Route>
@@ -90,6 +97,7 @@ function App() {
       </Route>
       <Route path="contact" element={<ContactPage/>}/>
     </Routes>
+    </NotificationContextProvider>
     <Footer/>
     </div>  
     </BlurContext.Provider>

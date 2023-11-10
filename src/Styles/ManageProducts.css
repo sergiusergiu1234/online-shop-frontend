@@ -12,3 +12,8 @@
 .floating label{
    margin-bottom: 10px;
 }
+
+.fixed-width-button {
+  width: 60px !important; /* Set your desired fixed width for the buttons */
+ }
+

@@ -23,9 +23,7 @@ const ConfirmOrderPage = () =>{
     const goShopping=()=>{
        navigate("/")
     }
-    useEffect(()=>{
-      console.log( order.items[0].size) ;
-    })
+
     return (
     <div className="container">
         {success ?<>
@@ -65,7 +63,7 @@ const ConfirmOrderPage = () =>{
                     Ordered items
                 </CardHeader>
                 <Card.Body>
-                    {order.items.map((item)=>(<div><label>{item.productName} - {item.product.size} ({item.quantity}) - {item.price} RON</label><br/></div>))}
+                    {order.items.map((item)=>(<div><label>{item.productName} ({item.quantity}) - {item.price} RON</label><br/></div>))}
                 </Card.Body>
             </Card>
             <Button className="place-order-button" onClick={(order)=>Checkout(order)}>Place order</Button></>}
