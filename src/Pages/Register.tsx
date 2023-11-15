@@ -271,7 +271,7 @@ const Register = () => {
                         </button>
                         <p>
                             Already registered?<br></br>
-                            <a href="/LoginPage">Sign In </a>
+                            <a className="signin-buton" href="/LoginPage">Sign In </a>
                         </p>
                     </form>
                 </section>
