@@ -6,7 +6,7 @@ import FilterBar from "../components/FilterBar";
 import Pagination from 'react-bootstrap/Pagination';
 import { Offcanvas } from "react-bootstrap";
 import FilterContext from "../context/FilterProvider";
-import { ProductTypeGeneral } from "../Types/ProductTypeGeneral";
+import { ProductCardType } from "../Types/ProductCardType";
 import { API_URL } from "../api/api";
 
 
@@ -16,13 +16,13 @@ import { API_URL } from "../api/api";
 const HomePage = () => {
   const [activePage, setActivePage] = useState(1);
   const [totalPages,setTotalPages] = useState(2);
-  const [products, setProducts] = useState<ProductTypeGeneral[]>([]);
+  const [products, setProducts] = useState<ProductCardType[]>([]);
   let tp = localStorage.getItem("f");
   const {filter} = useContext(FilterContext);
 
   const fetchProducts = async ()=>{
     const {productName, brands, gender, category_name, minPrice, maxPrice,type_name,attributes,sizes} = filter;
-    console.log(filter)
+     console.log(filter)
     let params ='';
     params += `&pageNumber=${activePage-1}`
     if(productName) params += `&name=${productName}`;
@@ -50,12 +50,13 @@ const HomePage = () => {
         }
       });
     }else{
+      console.log(url)
       response = await fetch(url);
     }
     const data = await response.json();
-    setProducts(data.content);
+    setProducts( data.content);
     setTotalPages(data.totalPages)
-   
+    console.log( await data.content);
   };
 
   useEffect(()=>{
@@ -94,12 +95,12 @@ const HomePage = () => {
    
       <div>
             <div className="product-grid">
-              {products.map((product: ProductTypeGeneral) => (
+              {products.map((product: ProductCardType) => (
                 
                 <Product 
                    key={product.id}
                    product={product} 
-                   isFavorite={product.isFavorite}
+
                     />  
               ))}
             </div>

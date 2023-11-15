@@ -15,7 +15,11 @@ import { Button, Card } from "react-bootstrap";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { SpecificProduct } from "../Types/SpecificProduct.types";
 import useAuth from "../hooks/useAuth";
-import { API_URL } from "../api/api";
+import { API_URL, addFavorite, addShoppingCart, deleteFavorite, deleteProductSize, fetchFavorites } from "../api/api";
+import { ProductDetails } from "../Types/ProductDetails.type";
+import { ProductSize } from "../Types/ProductSize.types";
+import { useNotifications } from "../context/NotificationContext";
+import { FavoriteType } from "../Types/FavoriteType.types";
 
 
 
@@ -24,26 +28,11 @@ const ProductPage = () => {
   const { auth } = useAuth();
   const [searchParams] = useSearchParams();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [products, setProducts] = useState<SpecificProduct[]>([
-    {
-      id: 0,
-      name: "",
-      price: 0,
-      brand: { id: 0, name: "" },
-      gender: { id: 0, name: "" },
-      category: { id: 0, name: "", typeName: "" },
-      image: "",
-      description: "",
-      isFavorite: false,
-      attributes: [{ attribute_name: "", value: "" }],
-      size: "",
-      stock: 0
-    },
-  ]);
-
-  const [selectedProduct, setSelectedProduct] = useState<SpecificProduct>(products[0]);
-  const [favorited, setFavorited] = useState(selectedProduct.isFavorite);
+  const [product,setProduct]= useState<ProductDetails>()
+  const [selectedSize,setSelectedSize] = useState<ProductSize>();
+  const {addNotification} = useNotifications();
+  const [favoriteList,setFavoriteList] = useState([]);
+  const [favorited, setFavorited] = useState(selectedSize?.favorite);
 
 
   //convert image data
@@ -58,121 +47,118 @@ const ProductPage = () => {
   const imageUrl = URL.createObjectURL(image);
 
   useEffect(() => {
-    fetchProducts();
+    fetchProduct();
     if (auth.accessToken) {
       setIsAdmin(auth.roles.includes("ROLE_ADMIN"));
     }
+  
   }, []);
 
+  const updateFavorites =  async () =>{
+    const favoriteData = await fetchFavorites();
+    setFavoriteList(await favoriteData.json())
+  }
 
-  useEffect(() => {
+  useEffect(()=>{
+    setFavorited(selectedSize?.favorite)
+    updateFavorites();
 
-    setFavorited(selectedProduct.isFavorite);
-    console.log(selectedProduct)
-  }, [selectedProduct]);
-  useEffect(() => {
-    setSelectedProduct(products[0]);
-  }, [products])
-  const fetchProducts = async () => {
+  },[selectedSize])
 
+
+
+  const fetchProduct = async () => {
     if (auth.accessToken) {
       const token = window.sessionStorage.getItem("accessToken");;
-      fetch(`${API_URL}/products/${searchParams.get('name')}`, {
+      fetch(`${API_URL}/products/Page/${searchParams.get('name')}`, {
         method: 'GET',
-
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
         .then((response) => response.json())
-        .then((data) => { setProducts(data) })
+        .then((data) => { setProduct(data) })
         .catch((error) => console.log(error));
     }
     else {
-
-      fetch(`${API_URL}/products/${searchParams.get('name')}`)
-        .then((response) => response.json())
-        .then((data) => { setProducts(data); })
-        .catch((error) => console.log(error));
-    }
-
-  };
-
-  const addToFavorite = () => {
-    //verify if authenticated
-    if (auth.accessToken) {
-      const token = window.sessionStorage.getItem("accessToken");
-      if (!favorited) {
-        //send server request
-        fetch(`${API_URL}/favorites/add/${selectedProduct.id}`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            setFavorited(true); console.log(data)
-          })
-      } else {
-        //send server request
-        fetch(`${API_URL}/favorites/delete/${selectedProduct.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-          .then(response => response.json())
-          .then(data => {
-            setFavorited(false);
-          })
-      }
-    } else {
-      alert("You must log in first!")
-    }
-  };
-
-  const addToCart = () => {
-    if (auth.accessToken) {
-      const token = window.sessionStorage.getItem("accessToken");
-
-      fetch(`${API_URL}/shoppingCart/add/${selectedProduct.id}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      fetch(`${API_URL}/products/Page/${searchParams.get('name')}`,{
+        method: 'GET'
       })
-        .then(response => response.json())
-        .then(data => console.log(data))
-    } else {
-      alert("You must log in first!")
+        .then((response) => response.json())
+        .then((data) => { setProduct(data); })
+    }
+  };
+  
+  const addToFavorite = async () => {
+   if(selectedSize){
+    const response = favorited ? await deleteFavorite(selectedSize.productSizeId) :
+                                  await addFavorite(selectedSize.productSizeId);
+    if(response.ok){
+      setFavorited(!favorited);
+      
+       // Update the favorite attribute of the corresponding ProductSize in product
+       setProduct((prevProduct) => {
+        if (prevProduct) {
+          const updatedProductSizes = prevProduct.sizes.map((size) =>
+            size.size.id === selectedSize?.size.id
+              ? { ...size, favorite: !favorited }
+              : size
+          );
+          return { ...prevProduct, sizes: updatedProductSizes };
+        }
+        return prevProduct;
+      });
+    }else{
+      addNotification(await response.text(),'danger',"Something happened");
+    }
+   }
+  
+  };
+
+
+  const addToCart = async () => {
+    if(selectedSize){
+      const response =  await addShoppingCart(selectedSize.productSizeId);
+    if(response.ok){
+      console.log(await response.text())
+      addNotification('Product added to cart.','success',"Product added to shopping cart succesfully");
+    }else{
+      addNotification(await response.text(),'danger',"Couldn't add product to cart");
+    }
     }
   };
 
-  const handleDelete = () => {
-    const token = window.sessionStorage.getItem("accessToken");
-    fetch(`${API_URL}/products/admin/${selectedProduct.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`
+  const handleDelete = async () => {
+    if(selectedSize){
+      const response = await deleteProductSize(selectedSize.productSizeId)
+      if(response.ok){
+        addNotification("Product size with id " + selectedSize.productSizeId + " deleted succesfully", 'success', "Success");
+        setProduct((prev)=>{
+          if(prev){
+            const updatedSizes = prev.sizes.filter((size)=> size.productSizeId !== selectedSize.productSizeId )
+            return {...prev, sizes: updatedSizes};
+          }
+          return prev;
+        })
+      }else{
+        addNotification(await response.text(),'danger','Something happened');
       }
-    })
-      .then(response => response.json())
-    window.location.reload();
-  }
+    }else{
+      addNotification("You must select a size first!",'warning','Warining');
+    }
+
+  } 
 
   const handleAddSize = () => {
     navigate("/admin/products");
-    if (selectedProduct) {
-      window.localStorage.setItem('selectedProduct', selectedProduct.id.toString());
-    }
+    // if (selectedProduct) {
+    //   window.localStorage.setItem('selectedProduct', selectedProduct.id.toString());
+    // }
   }
 
 
 
-  useEffect(() => {
-    console.log(products)
-  }, [products])
+
 
 
 
@@ -180,8 +166,9 @@ const ProductPage = () => {
     <Card>
       <CardHeader>
         {
-          isAdmin ? <> <Button variant="danger" onClick={handleDelete}>Delete product :( </Button>
-            <Button variant="warning" onClick={handleAddSize} >Edit product :| </Button>
+          isAdmin ? <> 
+          <Button variant="danger" onClick={handleDelete}>Delete product  </Button>
+            <Button variant="warning" onClick={handleAddSize} >Edit product </Button>
 
           </> : <></>
         }
@@ -194,16 +181,16 @@ const ProductPage = () => {
           <img className="product-image" src={imageUrl} />
           <div className="product-data">
             <div className="product-title">
-              {selectedProduct.gender.name}'s {selectedProduct.brand.name}{" "}
-              {selectedProduct.category.name.toUpperCase()} {selectedProduct.category.typeName}
-              <label className="head-big">{selectedProduct.name}</label>
-              <label className="head-big">${selectedProduct.price}</label>
+              {product?.gender.name}'s {product?.brand.name}{" "}
+              {product?.category.name.toUpperCase()} {product?.category.typeName}
+              <label className="head-big">{product?.name}</label>
+              <label className="head-big">${product?.price}</label>
             </div >
            
             <br />
               <table className="specs-table"> 
                 <tbody>
-                    {selectedProduct.attributes.map((product,index) => (
+                    {product?.attributes.map((product,index) => (
                         <tr key={index}>
                           <td >{product.attribute_name}</td>
                           <td>{` ${product.value}`}</td>
@@ -212,24 +199,22 @@ const ProductPage = () => {
                 </tbody>
               </table>
             <div className="size-buttons">
-              {products.map((product, index) => (
-                <Button key={product.id} className={product.id == selectedProduct.id ? "selected-size" : "not-selected-size"}
-                  onClick={() => { setSelectedProduct(product); }}>
-                  {product.size}
+              {product?.sizes.map((size, index) => (
+                <Button key={size.size.id} className={size.size.id == selectedSize?.size.id ? "selected-size" : "not-selected-size"}
+                  onClick={() => { setSelectedSize(size); }}>
+                  {size.size.value}
                 </Button>
               ))}
             </div>
-            {selectedProduct.name !== "" ? <>
-              <div>
-
-
+            {selectedSize?.size.id !== 0 ? <>
+              <div><br/>
                 <div className="product-buttons">
                   <IconContext.Provider value={{ size: "50px" }}>
                     <Button className={ favorited ? `favorited` : `not-favorited`} onClick={addToFavorite}>
                       {favorited ? <AiFillHeart /> : <AiOutlineHeart />}
                     </Button>
 
-                    {selectedProduct.stock !== 0 ? <Button className="cart-button" disabled={selectedProduct.stock === 0} onClick={addToCart}>
+                    {selectedSize?.stock !== 0 ? <Button className="cart-button" disabled={selectedSize?.stock === 0} onClick={addToCart}>
                       <AiFillPlusCircle />
                       Cart
                     </Button> : <label>Out of stock</label>}
@@ -240,7 +225,7 @@ const ProductPage = () => {
             </> : <></>}
 
           </div>
-          <p className="product-description">{selectedProduct.description}</p>
+          <p className="product-description">{product?.description}</p>
         </div>
         
 
@@ -250,6 +235,7 @@ const ProductPage = () => {
 
     </Card>
   );
+
 };
 
 export default ProductPage;

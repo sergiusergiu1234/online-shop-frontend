@@ -264,7 +264,7 @@ const Register = () => {
                         >
                             Passwords don't match!
                         </p>
-                        <button
+                        <button type="submit"
                             disabled={!validName || !validPwd || !validMatch ? true : false}
                         >
                             Sign up

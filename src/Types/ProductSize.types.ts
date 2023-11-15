@@ -1,5 +1,9 @@
+import { Size } from "./Size.types"
+
 export type ProductSize = {
-    size_id:number,
-    product_id:number,
-    stock:number
+    productSizeId:number,
+    size:Size
+    productId:number,
+    stock:number,
+    favorite:boolean
 }

@@ -4,14 +4,10 @@ import { Gender } from "./Gender.type";
 import { ProductAttribute } from "./ProductAttribute";
 import { Size } from "./Size.types";
 
-export  type ProductType = {
+export  type ProductCardType = {
     id: number;
+    image: string;
     name: string;
     price: number;
-    brand: Brand;
-    gender: Gender;
-    category: Category;
-    image: string;
-    description: string;
-    attributes: ProductAttribute[];
+    sizes:Size[];
   };

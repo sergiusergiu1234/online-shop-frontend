@@ -23,14 +23,14 @@ const FavoritesPage =()=>{
 
     const handleRemove =(favorite:FavoriteType)=>{
         const token = window.sessionStorage.getItem('accessToken')
-        fetch(`${API_URL}/favorites/delete/${favorite.productId}`,{
+        fetch(`${API_URL}/favorites/delete/${favorite.productSizeId}`,{
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
         .then(response =>response.json())
-        .then(data => setFavorites(prev=> prev.filter((fav)=> fav.productId != data.productId)))
+        .then(data => setFavorites(prev=> prev.filter((fav)=> fav.productSizeId != data.productSizeId)))
     }
 
     
@@ -38,7 +38,7 @@ const FavoritesPage =()=>{
         <h1 className="small-title">Favorite products</h1>
        
         {favoriteList.map((favorite:FavoriteType)=>(
-            <Favorite key={favorite.productId} favorite={favorite} handleRemove={handleRemove} />
+            <Favorite key={favorite.productSizeId} favorite={favorite} handleRemove={handleRemove} />
         ))}
         
     </div>)

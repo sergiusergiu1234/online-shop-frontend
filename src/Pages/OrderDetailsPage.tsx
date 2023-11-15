@@ -129,7 +129,7 @@ const OrderDetailsPage =()=>{
                 </CardHeader>
                 <Card.Body>
                 <div>
-                    {order.items.map((item)=><OrderItem key={item.productId} item={item}/>)}
+                    {order.items.map((item)=><OrderItem key={item.productSizeId} item={item}/>)}
                 </div>
                 <hr/>
                 <div>

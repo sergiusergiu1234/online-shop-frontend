@@ -61,6 +61,8 @@ const AccountPage = () => {
     );
   }, [orders]);
   console.log(pendingOrders);
+
+  
   const handleLogout = () => {
     window.localStorage.clear();
     setAuth({

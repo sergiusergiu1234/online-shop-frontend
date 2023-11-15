@@ -56,16 +56,6 @@ export const fetchTypes = async () => {
     return response;
   }
   
-export const getSizes = async (type_id:number) =>{
-  const url = `${API_URL}/products/sizes/${type_id}`;
-  const response = await fetch(url,{
-    method: 'GET'
-  });
-
-  return response.json();
-}
- 
-
 export const fetchOrders =async () => {
   const url = `${API_URL}/order`;
   const token = sessionStorage.getItem(`accessToken`);
@@ -175,6 +165,7 @@ export const deleteBrand = async (brandId:number)=>{
   const data = await response.json();
   return data;
 }
+
 export const editBrand = async (brandId:number | null, brandName:string) => {
   const url = `${API_URL}/brands/admin/edit/${brandId}`;
   const token = sessionStorage.getItem(`accessToken`);;
@@ -339,7 +330,7 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     return data;
     }
 
-    export const editAttribute = async (attributeName: string, attributeId: number | null) =>{
+  export const editAttribute = async (attributeName: string, attributeId: number | null) =>{
       const url = `${API_URL}/attributes/admin/edit/${attributeId}`;
     const token = sessionStorage.getItem(`accessToken`);;
     const requestBody = JSON.stringify({ name: attributeName }); 
@@ -355,7 +346,7 @@ export const editType = async (typeName:string,typeId:number | null) =>{
     return data;
     }
 
-    export const deleteAttribute = async (attributeId: number | null) => {
+  export const deleteAttribute = async (attributeId: number | null) => {
    const url = `${API_URL}/attributes/admin/delete/${attributeId}`;
   const token = sessionStorage.getItem(`accessToken`);;
   const response = await fetch (url,{
@@ -366,9 +357,8 @@ export const editType = async (typeName:string,typeId:number | null) =>{
   });
   const data = await response.json();
   return data;
-}
+  }
    
-
 export const addGender = async (genderName:string) => {
   const url = `${API_URL}/genders/admin/add`;
   const token = sessionStorage.getItem(`accessToken`);;
@@ -489,5 +479,57 @@ export const uploadProductSize = async (sizeId:number,productId:number,stock:num
   return response;
 }
 
+export const addFavorite =async (productSizeId:number) => {
+  const token = sessionStorage.getItem("accessToken");
+  const response = await fetch(`${API_URL}/favorites/add/${productSizeId}`,{
+    method: "POST",
+    headers :{
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return response;
+}
 
-  
+export const deleteFavorite =async (productSizeId:number) => {
+  const token = sessionStorage.getItem("accessToken");
+  const response = await fetch(`${API_URL}/favorites/delete/${productSizeId}`,{
+    method: "DELETE",
+    headers :{
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return response;
+}
+
+export const fetchFavorites = async () =>{
+  const token = sessionStorage.getItem("accessToken");
+  const response = await fetch(`${API_URL}/favorites`,{
+    method: "GET",
+    headers :{
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return await response;
+}
+
+export const addShoppingCart = async (productSizeId: number) =>{
+  const token = sessionStorage.getItem("accessToken");
+  const response = await fetch(`${API_URL}/shoppingCart/add/${productSizeId}`,{
+    method: "POST",
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response;
+}
+
+export const deleteProductSize = async (productSizeId:number) =>{
+  const token =sessionStorage.getItem("accessToken");
+  const response = await fetch(`${API_URL}/productSizes/delete/${productSizeId}`,{
+    method: 'DELETE',
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response;
+}

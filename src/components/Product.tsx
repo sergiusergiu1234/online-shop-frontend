@@ -8,12 +8,11 @@ import { Button, Card } from "react-bootstrap";
 import { MdAddShoppingCart } from "react-icons/md";
 import { deleteProduct } from "../api/api";
 import "../Styles/Product.css";
-import { ProductTypeGeneral } from "../Types/ProductTypeGeneral";
+import { ProductCardType } from "../Types/ProductCardType";
 
 interface Props {
-  product: ProductTypeGeneral
-  isFavorite: boolean
-  // sizes: number[];
+  product: ProductCardType
+
 }
 const Product = ({ product}: Props) => {
   const navigate = useNavigate();
@@ -32,22 +31,13 @@ const Product = ({ product}: Props) => {
   const goToProductDetails = () => {
 
     navigate(`/ProductPage?name=${product.name}`)
-    window.localStorage.setItem("productName", product.name)
-    window.localStorage.setItem("imageUrl", base64String);
-    window.localStorage.setitem("categ",product.category)
-    window.localStorage.setitem("typ",product.category.typeName)
-    window.localStorage.setitem("pric",product.price)
-    window.localStorage.setitem("gend",product.gender)
+
   }
-  useEffect(()=>{
-    product.sizes.map((size)=>{
-      console.log(size.size);
-    })
-  },[])
+
   return (
     <div  onClick={goToProductDetails} className="product-container">
       <div className="product-image-container">
-        {/* <Card.Img  src={imageUrl} */}
+     
         <img src={imageUrl}
          
           className="product-card-image"
@@ -56,7 +46,10 @@ const Product = ({ product}: Props) => {
       <div className="card-details">
           <label className="productName">{product.name} </label>
           <label className="productName">$ {product.price}  </label>
-          <label >{product.sizes[0].size} - {product.sizes[product.sizes.length-1].size}</label>
+         
+          {product.sizes.length === 0 ? 
+          <br/> :  <label >{product.sizes[0].value} - {product.sizes[product.sizes.length-1].value}</label>}
+         
           <Button  onClick={goToProductDetails} className="go-to-details">Go to details</Button>
       </div>
     </div>

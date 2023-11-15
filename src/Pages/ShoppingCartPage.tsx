@@ -41,7 +41,7 @@ const ShoppingCartPage =()=>{
     },[cartItems]);
 
     const handleAddToCart =(item: CartItemType) =>{
-        fetch(`${API_URL}/shoppingCart/add/${item.productId}`, {
+        fetch(`${API_URL}/shoppingCart/add/${item.productSizeId}`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ const ShoppingCartPage =()=>{
             .then((response) => response.json())
             .then((data) => {
                 setCartItems((prev) => prev.map((cart) => {
-                    if (cart.productId === data.productId) {
+                    if (cart.productSizeId === data.productSizeId) {
                         return data;
                     }
                     return cart;
@@ -60,7 +60,7 @@ const ShoppingCartPage =()=>{
 
     
     const handleRemoveFromCart = (item: CartItemType) => {
-        fetch(`${API_URL}/shoppingCart/delete/${item.productId}`, {
+        fetch(`${API_URL}/shoppingCart/delete/${item.productSizeId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -69,10 +69,10 @@ const ShoppingCartPage =()=>{
             .then((response) => response.json())
             .then((data) => {
                 if ((item.quantity-1) === 0) {
-                    setCartItems((prev) => prev.filter((cart) => cart.productId !== item.productId));
+                    setCartItems((prev) => prev.filter((cart) => cart.productSizeId !== item.productSizeId));
                 } else {
                     setCartItems((prev) => prev.map((cart) => {
-                        if (cart.productId === data.productId) {
+                        if (cart.productSizeId === data.productSizeId) {
                             return data;
                         }
                         return cart;
@@ -91,7 +91,7 @@ const ShoppingCartPage =()=>{
         navigate("/OrderDetails");
     }
     useEffect(() => {
-        const allItemsValid = cartItems.every((cartItem) => cartItem.quantity <= cartItem.product.stock);
+        const allItemsValid = cartItems.every((cartItem) => cartItem.quantity <= cartItem.stock);
         setIsValid(allItemsValid);
       }, [cartItems]);
     return(<div className="cartPage">
@@ -110,7 +110,7 @@ const ShoppingCartPage =()=>{
             </div>
             <div className="cartList">
             {cartItems.map((cart:CartItemType)=>(
-                <CartItem key={cart.productId} item={cart} addToCart={handleAddToCart}
+                <CartItem key={cart.productSizeId} item={cart} addToCart={handleAddToCart}
                 removeFromCart={handleRemoveFromCart}
                 setIsValid={setIsValid}
                 isValid={isValid}/>

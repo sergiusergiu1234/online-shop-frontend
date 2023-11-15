@@ -6,7 +6,7 @@ import { Accordion, AccordionButton, Button, Dropdown, DropdownButton, Form, For
 import { Gender } from "../Types/Gender.type";
 import { Brand } from "../Types/Brand.types";
 import { Attribute } from "../Types/Attribute.types";
-import { fetchBrands, fetchGenders, fetchTypes, getSizes } from "../api/api";
+import { fetchBrands, fetchGenders, fetchTypes } from "../api/api";
 import { ToggleButton } from 'primereact/togglebutton';
 import { Size } from "../Types/Size.types";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
@@ -21,7 +21,7 @@ const FilterBar = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
- 
+
 
   const [productName, setProductName] = useState("");
 
@@ -46,25 +46,26 @@ const FilterBar = () => {
   const [selectedValues, setSelectedValues] = useState(new Map());
   const [possibleValues, setPossibleValues] = useState<AttributeValues | null>(null);
 
-  const [sizes, setSizes] = useState<string[]>([]);
+  const [sizes, setSizes] = useState<Size[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   let tp = localStorage.getItem("f");
   const isInitialMount = useRef(true);
-  const {setFilter}= useContext(FilterContext);
+  const { setFilter } = useContext(FilterContext);
   const handleSearch = () => {
-  
-      setFilter({
-        productName:productName,
-        brands:selectedBrands,
-        gender: selectedGender,
-        category_name: selectedCategory,
-        minPrice:minPrice,
-        maxPrice:maxPrice,
-        type_name: selectedType?.name || "" ,
-        attributes:mapToString(selectedValues),
-        sizes:selectedSizes}
-      )
- 
+
+    setFilter({
+      productName: productName,
+      brands: selectedBrands,
+      gender: selectedGender,
+      category_name: selectedCategory,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      type_name: selectedType?.name || "",
+      attributes: mapToString(selectedValues),
+      sizes: selectedSizes
+    }
+    )
+
   };
   const handleReset = () => {
     window.location.reload();
@@ -76,7 +77,7 @@ const FilterBar = () => {
     setCategoryName("");
     setMinPrice("");
     setMaxPrice("");
-   
+
     setSelectedCategory('');
     setSelectedType(null);
     setSelectedGender('');
@@ -84,7 +85,7 @@ const FilterBar = () => {
   };
   //after component loaded, we fetch types, gender and brands
   useEffect(() => {
-    fetchTypes().then(data => {setTypes(data);});
+    fetchTypes().then(data => { setTypes(data); });
     fetchGenders().then(data => setGenders(data));
     fetchBrands().then(data => setBrands(data));
   }, []);
@@ -94,10 +95,7 @@ const FilterBar = () => {
   useEffect(() => {
     setSelectedCategory('');
     setSelectedValues(new Map());
-    if (selectedType !== null)
-      getSizes(selectedType.id).then(data => {
-        setSizes(data);
-      })
+    selectedType && setSizes(selectedType?.sizeList);
   }, [selectedType]);
 
 
@@ -165,11 +163,6 @@ const FilterBar = () => {
     return result;
   }
 
-
-  useEffect(()=>{
-    console.log(`selectedType ${selectedType}`);
-    console.log(possibleValues);
-  },[selectedType])
   return (
     <>
       <Button className=" btn notSelected" onClick={handleShow}>
@@ -181,202 +174,205 @@ const FilterBar = () => {
           <Offcanvas.Title>Filter products</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-      
-        <div className="filter-container">
-      <Button variant="primary" onClick={ handleSearch }>
-        Search
-      </Button>
-      <Button variant="danger" onClick={handleReset}>
-        Reset
-      </Button>
-      <Accordion defaultActiveKey="1" className="accordion">
-        <AccordionButton className="accordion-item">
-          Equipment type
-        </AccordionButton>
-        <AccordionBody className="filter-accordion">
-          {types.map((type) => (
-            <div className="button-container">
 
-           
-              <Button
-                className={`btn ${selectedType === type ? "selected " : "notSelected"}`}
-                key={type.id}
-                onClick={() => {
-                  setTypeName(type.name);
-                  setCategories(type.categoryDtoList);
-                  setSelectedType(type);
-                  setPossibleValues(type.attributeValues);
-
-                }}
-              >
-                {type.name}
-              </Button>
- </div>
-          
-
-          ))}
-
-        </AccordionBody>
-      </Accordion>
+          <div className="filter-container">
+            <Button variant="primary" onClick={handleSearch}>
+              Search
+            </Button>
+            <Button variant="danger" onClick={handleReset}>
+              Reset
+            </Button>
+            <Accordion defaultActiveKey="1" className="accordion">
+              <AccordionButton className="accordion-item">
+                Equipment type
+              </AccordionButton>
+              <AccordionBody className="filter-accordion">
+                {types.map((type) => (
+                  <div className="button-container">
 
 
+                    <Button
+                      className={`btn ${selectedType === type ? "selected " : "notSelected"}`}
+                      key={type.id}
+                      onClick={() => {
+                        setTypeName(type.name);
+                        setCategories(type.categoryDtoList);
+                        setSelectedType(type);
+                        setPossibleValues(type.attributeValues);
 
-      {categories.length ? (
-        <Accordion defaultActiveKey="1">
-          <AccordionButton className="accordion-item">
-            Category
-          </AccordionButton>
-          <AccordionBody className="filter-accordion">
-            {categories.map((category) => (
-              <div className="button-container">
-                <Button
-                  className={`btn ${selectedCategory === category.name ? "selected " : "notSelected"}`}
-                  key={category.id}
+                      }}
+                    >
+                      {type.name}
+                    </Button>
+                  </div>
+
+
+                ))}
+
+              </AccordionBody>
+            </Accordion>
+
+
+
+            {categories.length ? (
+              <Accordion defaultActiveKey="1">
+                <AccordionButton className="accordion-item">
+                  Category
+                </AccordionButton>
+                <AccordionBody className="filter-accordion">
+                  {categories.map((category) => (
+                    <div className="button-container">
+                      <Button
+                        className={`btn ${selectedCategory === category.name ? "selected " : "notSelected"}`}
+                        key={category.id}
+                        onClick={() => {
+                          setCategoryName(category.name);
+                          setSelectedCategory(category.name);
+                        }}
+                      >
+                        {category.name}
+                      </Button>
+
+                    </div>
+
+                  ))}
+
+                </AccordionBody>
+              </Accordion>
+            ) : (
+              <p>No category selected. Pick a type first.</p>
+            )}
+
+
+            <Accordion defaultActiveKey="1">
+              <AccordionButton className="accordion-item bg-transparent">
+                Product size
+              </AccordionButton>
+              <AccordionBody>
+                {sizes.length ? (<>
+                  {
+                    sizes.map((size) => (
+                      <Button
+                        key={size.id}
+                        className={`btn ${selectedSizes.includes(size.value) ? "selected" : "notSelected"}`}
+
+                        onClick={() => handleSizesChange(size.value)}>{size.value}</Button>
+                    ))
+                  }
+
+                </>) : (
+                  <p>Pick a type first.</p>
+                )}
+              </AccordionBody>
+            </Accordion>
+
+
+
+
+            {
+              possibleValues != null ?
+                <>
+
+                  {/* map through a array of maps Map<string,string[]>[] */}
+                  {Object.entries(possibleValues).map(([attributeName, attributeValues]) => (
+                    <div key={attributeName}>
+                      <Accordion>
+
+                        <AccordionButton className="accordion-item bg-transparent">
+                          {attributeName}
+                        </AccordionButton>
+                        <Accordion.Body className="filter-accordion">
+                          <div className="buttons">
+                            {attributeValues && attributeValues
+                              .sort((a, b) => {
+                                if (!isNaN(Number(a)) && !isNaN(Number(b))) {
+                                  return Number(a) - Number(b);
+                                }
+                                return a.localeCompare(b);
+                              })
+                              .map((value) => (
+                                <Form.Check
+                                  key={value}
+                                  onChange={handleAttributesChange}
+                                  label={value}
+                                  value={[attributeName, value]}
+                                  checked={handleAttributeCheck(attributeName, value)}
+                                />
+                              ))}
+                          </div>
+                        </Accordion.Body>
+                      </Accordion>
+
+
+                    </div>
+                  ))
+                  }
+                </>
+                :
+                <></>
+            }
+
+
+            <h3 className="fbh3">Brand</h3>
+            {brands.map((brand) => (
+              <Form.Check
+                key={brand.id}
+                onChange={handleBrandChange}
+                label={brand.name}
+                value={brand.name}
+                checked={selectedBrands.includes(brand.name)}
+              />
+            ))}
+            <br />
+
+            <h4>Gender</h4>
+            <DropdownButton
+              id="dropdown-item-button"
+              title={selectedGender ? selectedGender : "Select gender"}
+              variant="bg transaprent"
+
+            >
+              <Dropdown.ItemText>Pick gender</Dropdown.ItemText>
+              {genders.map((gender) => (
+                <Dropdown.Item
+                  as="button"
+                  key={gender.id}
                   onClick={() => {
-                    setCategoryName(category.name);
-                    setSelectedCategory(category.name);
+                    setGenderName(gender.name);
+                    setSelectedGender(gender.name);
+
                   }}
                 >
-                  {category.name}
-                </Button>
+                  {gender.name}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
 
-              </div>
+            <h3 className="fbh3">Name</h3>
+            <input
+              id="productName"
+              type="text"
+              onChange={(e) => setProductName(e.currentTarget.value)}
+              value={productName}
+            />
 
-            ))}
-
-          </AccordionBody>
-        </Accordion>
-      ) : (
-        <p>No category selected. Pick a type first.</p>
-      )}
-
-
-      <Accordion defaultActiveKey="1">
-        <AccordionButton className="accordion-item bg-transparent">
-          Product size
-        </AccordionButton>
-        <AccordionBody>
-          {sizes.length ? (<>
-            {sizes.sort((a, b) => a.localeCompare(b)).map((size) => (
-              <Button
-                key={size}
-                className={`btn ${selectedSizes.includes(size) ? "selected" : "notSelected"}`}
-
-                onClick={() => handleSizesChange(size)}>{size}</Button>
-            ))}
-          </>) : (
-            <p>Pick a type first.</p>
-          )}
-        </AccordionBody>
-      </Accordion>
-
-
-
-
-      {
-        possibleValues != null ?
-          <>
-
-            {/* map through a array of maps Map<string,string[]>[] */}
-            {Object.entries(possibleValues).map(([attributeName, attributeValues]) => (
-              <div key={attributeName}>
-                <Accordion>
-
-                  <AccordionButton className="accordion-item bg-transparent">
-                    {attributeName}
-                  </AccordionButton>
-                  <Accordion.Body className="filter-accordion">
-                    <div className="buttons">
-                      {attributeValues && attributeValues
-                        .sort((a, b) => {
-                          if (!isNaN(Number(a)) && !isNaN(Number(b))) {
-                            return Number(a) - Number(b);
-                          }
-                          return a.localeCompare(b);
-                        })
-                        .map((value) => (
-                          <Form.Check
-                            key={value}
-                            onChange={handleAttributesChange}
-                            label={value}
-                            value={[attributeName, value]}
-                            checked={handleAttributeCheck(attributeName, value)}
-                          />
-                        ))}
-                    </div>
-                  </Accordion.Body>
-                </Accordion>
-
-
-              </div>
-            ))
-            }
-          </>
-          :
-          <></>
-      }
-
-
-      <h3 className="fbh3">Brand</h3>
-      {brands.map((brand) => (
-        <Form.Check
-          key={brand.id}
-          onChange={handleBrandChange}
-          label={brand.name}
-          value={brand.name}
-          checked={selectedBrands.includes(brand.name)}
-        />
-      ))}
-      <br />
-
-      <h4>Gender</h4>
-      <DropdownButton
-        id="dropdown-item-button"
-        title={selectedGender ? selectedGender : "Select gender"}
-        variant="bg transaprent"
-       
-      >
-        <Dropdown.ItemText>Pick gender</Dropdown.ItemText>
-        {genders.map((gender) => (
-          <Dropdown.Item
-            as="button"
-            key={gender.id}
-            onClick={() => {
-              setGenderName(gender.name);
-              setSelectedGender(gender.name);
-
-            }}
-          >
-            {gender.name}
-          </Dropdown.Item>
-        ))}
-      </DropdownButton>
-
-      <h3 className="fbh3">Name</h3>
-      <input
-        id="productName"
-        type="text"
-        onChange={(e) => setProductName(e.currentTarget.value)}
-        value={productName}
-      />
-
-      <h3 className="fbh3">Minimum price</h3>
-      <input
-        id="minPrice"
-        type="number"
-        pattern="[0-9]*"
-        onChange={(e) => setMinPrice(e.currentTarget.value)}
-        value={minPrice}
-      />
-      <h4>Maximum price</h4>
-      <input
-        id="maxPrice"
-        type="number"
-        pattern="[0-9]*"
-        onChange={(e) => setMaxPrice(e.currentTarget.value)}
-        value={maxPrice}
-      />
-    </div>
+            <h3 className="fbh3">Minimum price</h3>
+            <input
+              id="minPrice"
+              type="number"
+              pattern="[0-9]*"
+              onChange={(e) => setMinPrice(e.currentTarget.value)}
+              value={minPrice}
+            />
+            <h4>Maximum price</h4>
+            <input
+              id="maxPrice"
+              type="number"
+              pattern="[0-9]*"
+              onChange={(e) => setMaxPrice(e.currentTarget.value)}
+              value={maxPrice}
+            />
+          </div>
 
         </Offcanvas.Body>
       </Offcanvas>
@@ -384,7 +380,7 @@ const FilterBar = () => {
 
 
 
-    
+
   );
 };
 

@@ -19,72 +19,28 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
 
 
   const [cartItem, setCartItem] = useState<CartItemType>({
-    productId: item.productId,
-    productImage: item.productImage,
     productName: item.productName,
-    quantity: item.quantity,
+    productImage: item.productImage,
     price: item.price,
-    product:{
+    stock: item.stock,
+    productSizeId: item.productSizeId,
+    quantity: item.quantity,
+    size:item.size,
+    product: {
       id: item.product.id,
-      name: item.productName,
-      price: item.price,
-      brand: {
-        id: item.product.brand.id,
-        name: item.product.brand.name
-      },
-      gender: {
-        id: item.product.gender.id,
-        name: item.product.gender.name
-      },
-      category: {
-        id: item.product.category.id,
-        name: item.product.category.name,
-        typeName: item.product.category.typeName
-      },
-      image: item.productImage,
-      description: item.product.description,
-      isFavorite: item.product.isFavorite,
+      image: item.product.image,
+      name: item.product.name,
+      price: item.product.price,
+      category: item.product.category,
+      brand: item.product.brand,
       attributes: item.product.attributes,
-      stock: item.product.stock,
-      
-    },
-    stock:item.stock,
-    
+      description: item.product.description,
+      gender: item.product.gender,
+    }
   });
 
   useEffect(() => {
-    setCartItem({
-      productId: item.productId,
-      productImage: item.productImage,
-      productName: item.productName,
-      quantity: item.quantity,
-      price: item.price,
-      product: {
-        id: item.product.id,
-        name: item.productName,
-        price: item.price,
-        brand: {
-          id: item.product.brand.id,
-          name: item.product.brand.name
-        },
-        gender: {
-          id: item.product.gender.id,
-          name: item.product.gender.name
-        },
-        category: {
-          id: item.product.category.id,
-          name: item.product.category.name,
-          typeName: item.product.category.typeName
-        },
-        image: item.productImage,
-        description: item.product.description,
-        isFavorite: item.product.isFavorite,
-        attributes: item.product.attributes,
-        stock: item.product.stock,
-       
-      },stock:item.stock
- 
-    });
+    setCartItem(item);
   }, [item]);
 
   
@@ -93,11 +49,11 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
   }, [item]);
 
   useEffect(() => {
-    setIsValid((prevIsValid) => prevIsValid && cartItem.quantity <= cartItem.product.stock);
-  }, [cartItem.quantity, cartItem.product.stock, setIsValid]);
+    setIsValid((prevIsValid) => prevIsValid && cartItem.quantity <= cartItem.stock);
+  }, [cartItem.quantity, cartItem.stock, setIsValid]);
 
   useEffect(() => {
-    setIsValid((prevIsValid) => prevIsValid && cartItem.quantity <= cartItem.product.stock);
+    setIsValid((prevIsValid) => prevIsValid && cartItem.quantity <= cartItem.stock);
   }, []);
 
   return (
@@ -108,8 +64,8 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
     
               <label  className="attribute_name">{item.product.brand.name} - {item.product.category.name} - {item.product.category.typeName}</label>
                 <hr/>
-                <label className="attribute_name">Size: </label>
-              
+                <label className="attribute_name">Size:  {item.size}</label>
+            
                 <div className="attr">
                 {item.product.attributes.map((attribute)=>(
                   <div>
@@ -124,14 +80,14 @@ const CartItem =({item,addToCart,removeFromCart, setIsValid,isValid}:Props)=>{
         <IconContext.Provider value={{ size: "30px" }}>
             <div  >
                 <label className="attribute_name">Quantity: {cartItem.quantity}</label>
-                <label>({cartItem.product.stock} in stock)</label>
+                <label>({cartItem.stock} in stock)</label>
                 <br/>
                 <label className="attribute_name">${cartItem.price}</label>
           </div>
           <div className="shoppingCart-buttons">
           <Button className="addToCart" 
-                  disabled={cartItem.quantity >= cartItem.product.stock} onClick={()=>  cartItem.quantity !== cartItem.product.stock ? 
-              addToCart(item) : alert(`Only ${cartItem.product.stock} left in stock!`)}>
+                  disabled={cartItem.quantity >= cartItem.stock} onClick={()=>  cartItem.quantity !== cartItem.stock ? 
+              addToCart(item) : alert(`Only ${cartItem.stock} left in stock!`)}>
             <HiOutlinePlusCircle />
           </Button>
           <button className="removeFromCart" onClick={()=>

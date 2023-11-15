@@ -7,14 +7,15 @@ import '../Styles/Favorite.css';
 import { useNavigate } from "react-router";
 import { IoTrashOutline } from "react-icons/io5";
 import { useEffect } from "react";
-import { API_URL } from "../api/api";
+import { API_URL, addShoppingCart } from "../api/api";
+import { useNotifications } from "../context/NotificationContext";
 interface Props{
     favorite:FavoriteType
     handleRemove: (favorite: FavoriteType) => void;
 }
 const Favorite =({favorite,handleRemove}:Props)=>{
     const navigate = useNavigate(); 
-
+    const {addNotification} = useNotifications();
     //convert image data
     const base64String = favorite.productImage;
     const byteCharacters = atob(base64String);
@@ -27,19 +28,18 @@ const Favorite =({favorite,handleRemove}:Props)=>{
     const imageUrl = URL.createObjectURL(image);
 
     const goToProductDetails =()=>{
-        navigate(`/ProductPage/${favorite.productId}`)
+        navigate(`/ProductPage?name=${favorite.productName}`)
         window.localStorage.setItem("imageUrl",base64String)
     }
 
-    const addToCart =()=>{
-        const token = window.localStorage.getItem('accessToken')
-        fetch(`${API_URL}/shoppingCart/add/${favorite.productId}`,{
-            method: 'POST',
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            }
-        })
-        .then(response => response.json())
+    const addToCart =async ()=>{
+            const response =  await addShoppingCart(favorite.productSizeId);
+          if(response.ok){
+            console.log(await response.text())
+            addNotification('Product added to cart.','success',"Product added to shopping cart succesfully");
+          }else{
+            addNotification(await response.text(),'danger',"Couldn't add product to cart");
+          }
     }
 
     return (
@@ -57,12 +57,12 @@ const Favorite =({favorite,handleRemove}:Props)=>{
         </div>
         <div className="favorite-buttons">
        
-                <button className="addToCart" onClick={addToCart}>
+                <button className="add-to-cart-button" onClick={addToCart}>
                     <MdAddShoppingCart />
                     <label>Buy</label>
                 </button>
                
-                <button className="delete-favorite" onClick={()=>handleRemove(favorite)}>
+                <button className="delete-favorite-button" onClick={()=>handleRemove(favorite)}>
                   
                         <IoTrashOutline/>
                       

@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     width: 400px;
-    border: 1px solid black;
+    border: 0.3px solid black; 
     background-color: white;
     margin-top: 30px;
     padding-top: 10px;
@@ -36,6 +36,27 @@
 }
 .favorite-buttons{
     padding-right: 15px;
+}
+
+.add-to-cart-button{
+    background-color: transparent;
+    color: black;
+}
+.add-to-cart-button:hover{
+    background-color:rgb(174, 174, 174);
+}
+.add-to-cart-button:hover,
+.add-to-cart-button label{
+    cursor: pointer;
+   
+}
+.delete-favorite-button{
+    background-color: transparent;
+    color: red;
+}
+.delete-favorite-button:hover{
+    background-color:rgb(174, 174, 174);
+    cursor: pointer;
 }
 @media screen and (max-width:960px) {
    .favorite-item{
