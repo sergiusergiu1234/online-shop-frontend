@@ -85,10 +85,11 @@ const FilterBar = () => {
   };
   //after component loaded, we fetch types, gender and brands
   useEffect(() => {
-    fetchTypes().then(data => { setTypes(data); });
+    fetchTypes().then(data => { setTypes(data);console.log(data) });
     fetchGenders().then(data => setGenders(data));
     fetchBrands().then(data => setBrands(data));
-  }, []);
+    console.log("fetched")
+  }, [show]);
 
 
   //after we select  a type, reset category, sizes and atribute values

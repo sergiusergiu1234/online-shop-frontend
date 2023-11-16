@@ -22,7 +22,6 @@ const HomePage = () => {
 
   const fetchProducts = async ()=>{
     const {productName, brands, gender, category_name, minPrice, maxPrice,type_name,attributes,sizes} = filter;
-     console.log(filter)
     let params ='';
     params += `&pageNumber=${activePage-1}`
     if(productName) params += `&name=${productName}`;
@@ -40,7 +39,6 @@ const HomePage = () => {
     if(sizes) params += `&sizes=${sizes}`;
     const token = window.sessionStorage.getItem("accessToken");;
     const url = `${API_URL}/products?${params.slice(1)}`;
-    console.log(params)
     let response;
     if(token != null){
       response = await fetch(url,{
@@ -50,7 +48,6 @@ const HomePage = () => {
         }
       });
     }else{
-      console.log(url)
       response = await fetch(url);
     }
     const data = await response.json();

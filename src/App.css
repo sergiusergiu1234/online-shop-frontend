@@ -9,7 +9,7 @@
     -ms-filter: blur(2px);
     filter: blur(2px);
     opacity: 0.4;
-    transition: all 0.5s ease;
+    transition: all 0.2s ease;
 }
 .not-blurred{
     transition: all 0.5s ease;
