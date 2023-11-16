@@ -7,7 +7,32 @@
   gap: 1rem;
   margin-left:20px
 }
+@media (min-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+  }
+}
 
+/* For medium-sized screens, up to 3 items per row */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+  }
+}
+
+/* For small screens, up to 2 items per row */
+@media (max-width: 767px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+/* For extra small screens, 1 item per row */
+@media (max-width: 479px) {
+  .product-grid {
+    grid-template-columns: repeat(1, minmax(200px, 1fr));
+  }
+}
 
 
 

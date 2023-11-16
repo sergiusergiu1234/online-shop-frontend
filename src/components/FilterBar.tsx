@@ -18,11 +18,18 @@ import FilterContext from "../context/FilterProvider";
 const FilterBar = () => {
 
   const [show, setShow] = useState(false);
+  const [fetched,setFetched] = useState(false);
+  const handleClose = () => {setShow(false); 
+        
+};
+  const handleShow = () => {
+    setShow(true); 
+    fetchTypes().then(data => { setTypes(data);});
+    fetchGenders().then(data => setGenders(data));
+    fetchBrands().then(data => setBrands(data));
+};
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-
+  
   const [productName, setProductName] = useState("");
 
   const [genderName, setGenderName] = useState("");
@@ -51,6 +58,7 @@ const FilterBar = () => {
   let tp = localStorage.getItem("f");
   const isInitialMount = useRef(true);
   const { setFilter } = useContext(FilterContext);
+
   const handleSearch = () => {
 
     setFilter({
@@ -83,13 +91,7 @@ const FilterBar = () => {
     setSelectedGender('');
     setSelectedSizes([]);
   };
-  //after component loaded, we fetch types, gender and brands
-  useEffect(() => {
-    fetchTypes().then(data => { setTypes(data);console.log(data) });
-    fetchGenders().then(data => setGenders(data));
-    fetchBrands().then(data => setBrands(data));
-    console.log("fetched")
-  }, [show]);
+
 
 
   //after we select  a type, reset category, sizes and atribute values

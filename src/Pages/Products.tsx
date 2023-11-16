@@ -24,12 +24,12 @@ const HomePage = () => {
     const {productName, brands, gender, category_name, minPrice, maxPrice,type_name,attributes,sizes} = filter;
     let params ='';
     params += `&pageNumber=${activePage-1}`
-    if(productName) params += `&name=${productName}`;
-    if(brands) params += `&brands=${brands}`
-    if(gender) params += `&genders=${gender}`;
-    if(category_name) params += `&category_name=${category_name}`;
-    if(minPrice) params += `&minPrice=${minPrice}`;
-    if(maxPrice) params += `&maxPrice=${maxPrice}`;
+    if(productName !== "") params += `&name=${productName}`;
+    if(brands.length !== 0) params += `&brands=${brands}`
+    if(gender !== "") params += `&genders=${gender}`;
+    if(category_name !== "") params += `&category_name=${category_name}`;
+    if(minPrice !== "") params += `&minPrice=${minPrice}`;
+    if(maxPrice !=="") params += `&maxPrice=${maxPrice}`;
     if(tp){
       params += `&type_name=${tp}`
     }else{

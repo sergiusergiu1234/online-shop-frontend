@@ -31,7 +31,7 @@ const Product = ({ product}: Props) => {
   const goToProductDetails = () => {
 
     navigate(`/ProductPage?name=${product.name}`)
-
+    window.localStorage.setItem("imageUrl",product.image)
   }
 
   return (

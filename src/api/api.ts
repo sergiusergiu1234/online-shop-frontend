@@ -23,7 +23,6 @@ export const fetchTypes = async () => {
     const data = await response.json();
     return data;
   };
-  
   export const fetchBrands = async () => {
     const url =`${API_URL}/brands/all`;
     const response = await fetch(url,{
@@ -32,15 +31,12 @@ export const fetchTypes = async () => {
     const data = await response.json();
     return data;
   };
-  
   export const fetchCategories = async () =>{
     const url = `${API_URL}/categories/all`;
     const response = await fetch(url);
     const data = await response.json();
     return data;
   }
-
-
   export const handleCheckout = async (checkoutData:any) =>{
     const url =`${API_URL}/order/create`;
     const token = sessionStorage.getItem(`accessToken`);

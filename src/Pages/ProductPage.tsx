@@ -181,10 +181,10 @@ const ProductPage = () => {
           <img className="product-image" src={imageUrl} />
           <div className="product-data">
             <div className="product-title">
-              {product?.gender.name}'s {product?.brand.name}{" "}
+              {product ? <> {product?.gender.name}'s {product?.brand.name}{" "}
               {product?.category.name.toUpperCase()} {product?.category.typeName}
               <label className="head-big">{product?.name}</label>
-              <label className="head-big">${product?.price}</label>
+              <label className="head-big">${product?.price}</label></> : <> <label>Loading data</label></>}
             </div >
            
             <br />
