@@ -4,7 +4,7 @@ import { Brand } from "../../Types/Brand.types";
 import { Gender } from "../../Types/Gender.type";
 import { Type } from "../../Types/Type.types";
 import { Category } from "../../Types/Category.types";
-import { API_URL, createProduct, fetchBrands, fetchGenders, fetchTypes, uploadProductAttribute, uploadProductImage, uploadProductSize } from "../../api/api";
+import { API_URL, createProduct, deleteProduct, fetchBrands, fetchGenders, fetchTypes, uploadProductAttribute, uploadProductImage, uploadProductSize } from "../../api/api";
 import { create } from "domain";
 import { useNotifications } from "../../context/NotificationContext";
 import { Attribute } from "../../Types/Attribute.types";
@@ -68,15 +68,22 @@ const ManageProducts = () => {
     }
   }
 
-  const handleSubmitProduct = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitProduct = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createProduct(productName,
+    const response = await createProduct(productName,
       selectedBrand ? selectedBrand.name : "",
       selectedGender ? selectedGender.name : "",
       selectedCategory ? selectedCategory.name : "",
       price,
       description
-    ).then(data => setProductId(data.id));
+    );
+    if(response.ok){
+      addNotification("Product added succesfully",'success','Operation succes');
+      const data = await response.json();
+      setProductId(data.id)
+    }else{
+      addNotification(await response.text(),'danger','Operation failed');
+    }
   }
 
   const handleAttributeChange = (id: number, value: string) => {
@@ -99,7 +106,7 @@ const ManageProducts = () => {
   }
 
   const handleAddProductSize = async () =>{
-    if(selectedSize && productId !== 0 && stock !== 0){
+    if(selectedSize && productId !== 0 ){
       const response= await uploadProductSize(selectedSize.id,productId,stock);
       if(response.ok){
         addNotification(`Size ${selectedSize.value} with id ${selectedSize.id}, stock: ${stock} for product ${productId} was added
@@ -107,6 +114,15 @@ const ManageProducts = () => {
       }else{
         addNotification(await response.text(),'danger',"Post failed.");
       }
+    }
+  }
+
+  const handleDeleteProduct = async () =>{
+    const response = await deleteProduct(productId);
+    if(response.ok){
+      addNotification(`Product with id ${productId} was deleted succesfully`,'success',"Operation succesfull");
+    }else{
+      addNotification(await response.text(),'danger',"Failed");
     }
   }
   return (<div>
@@ -325,7 +341,22 @@ const ManageProducts = () => {
             Add size
           </Button>
         </InputGroup>
-
+                <br/><br/><br/>
+        <InputGroup>
+        <FloatingLabel label="Product id ">
+            <Form.Control
+              placeholder="Product id"
+              id="id"
+              type="number"
+              pattern="[0-9]*"
+              onChange={(e) => setProductId(parseInt(e.currentTarget.value))}
+              value={productId !== null ? productId.toString() : ""}
+            />
+          </FloatingLabel>
+          <Button onClick={handleDeleteProduct} variant="danger">
+            Delete product
+          </Button>
+        </InputGroup>
       </div>
     </section>
   </div>)

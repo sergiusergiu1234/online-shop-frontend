@@ -80,6 +80,13 @@
 .product-description{
   width: 90%;
 }
+.spinner-container{
+  height: 50vh;
+  width: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width:700px) {
   .product-page-container{

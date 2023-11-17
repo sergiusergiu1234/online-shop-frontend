@@ -1,8 +1,8 @@
 import { error } from "console";
 import { Attribute } from "../Types/Attribute.types";
 
-//export const API_URL = 'http://localhost:8080';
-export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
+export const API_URL = 'http://localhost:8080';
+//export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
 
 
 export const fetchTypes = async () => {
@@ -419,8 +419,7 @@ export const addGender = async (genderName:string) => {
         "price": price,
         "description": description
       })})
-   const data = await response.json();
-   return data;
+   return response;
   }
 
   export const uploadProductImage = async (file:File,productId:number) =>{

@@ -191,12 +191,12 @@ const FilterBar = () => {
               </AccordionButton>
               <AccordionBody className="filter-accordion">
                 {types.map((type) => (
-                  <div className="button-container">
+                  <div className="button-container"   key={type.id}>
 
 
                     <Button
                       className={`btn ${selectedType === type ? "selected " : "notSelected"}`}
-                      key={type.id}
+                    
                       onClick={() => {
                         setTypeName(type.name);
                         setCategories(type.categoryDtoList);
@@ -224,10 +224,10 @@ const FilterBar = () => {
                 </AccordionButton>
                 <AccordionBody className="filter-accordion">
                   {categories.map((category) => (
-                    <div className="button-container">
+                    <div className="button-container" key={category.id}>
                       <Button
                         className={`btn ${selectedCategory === category.name ? "selected " : "notSelected"}`}
-                        key={category.id}
+                        
                         onClick={() => {
                           setCategoryName(category.name);
                           setSelectedCategory(category.name);

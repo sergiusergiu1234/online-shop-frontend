@@ -117,7 +117,7 @@ const AccountPage = () => {
           <h3>Pending orders</h3>
           {pendingOrders.length > 0 ? (
             pendingOrders.map((order: OrderType) => (
-              <Order key={order.id} order={order} />
+              <Order key={order.generationDateTime} order={order} />
             ))
           ) : (
             <p>You have no pending orders</p>
@@ -128,7 +128,7 @@ const AccountPage = () => {
           <h3>Delivered orders</h3>
           {deliveredOrders.length > 0 ? (
             deliveredOrders.map((order: OrderType) => (
-              <Order key={order.id} order={order} />
+              <Order key={order.generationDateTime} order={order} />
             ))
           ) : (
             <p>You have no delivered orders</p>
@@ -139,7 +139,7 @@ const AccountPage = () => {
           <h3>Declined orders</h3>
           {declinedOrders.length > 0 ? (
             declinedOrders.map((order: OrderType) => (
-              <Order key={order.id} order={order} />
+              <Order key={order.generationDateTime} order={order} />
             ))
           ) : (
             <p>You have no declined orders</p>
@@ -150,7 +150,7 @@ const AccountPage = () => {
           <h3>Accepted orders</h3>
           {acceptedOrders.length > 0 ? (
             acceptedOrders.map((order: OrderType) => (
-              <Order key={order.id} order={order} />
+              <Order key={order.generationDateTime} order={order} />
             ))
           ) : (
             <p>You have no accepted orders.</p>

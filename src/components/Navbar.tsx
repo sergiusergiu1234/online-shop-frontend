@@ -38,7 +38,6 @@ const Navbar = () => {
 
   const handleToggle = () => {
     setToggle(!toggle);
-    console.log(toggle);
   }
   useEffect(()=>{
     (toggle && mobile) ? setBlurred(true) : setBlurred(false);
@@ -54,7 +53,7 @@ const Navbar = () => {
 
       setLoading(false);
     };
-    console.log(isAdmin)
+  
     checkAdminRole();
   }, [auth.roles, loading]);
 

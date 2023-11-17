@@ -11,7 +11,7 @@ import {
 } from "react-icons/ai";
 import "../Styles/ProductPage.css";
 import { error } from "console";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Spinner } from "react-bootstrap";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { SpecificProduct } from "../Types/SpecificProduct.types";
 import useAuth from "../hooks/useAuth";
@@ -51,8 +51,9 @@ const ProductPage = () => {
     if (auth.accessToken) {
       setIsAdmin(auth.roles.includes("ROLE_ADMIN"));
     }
-  
+    
   }, []);
+
 
   const updateFavorites =  async () =>{
     const favoriteData = await fetchFavorites();
@@ -68,8 +69,8 @@ const ProductPage = () => {
 
 
   const fetchProduct = async () => {
-    if (auth.accessToken) {
-      const token = window.sessionStorage.getItem("accessToken");;
+    const token = window.sessionStorage.getItem("accessToken");
+    if (token != null) {
       fetch(`${API_URL}/products/Page/${searchParams.get('name')}`, {
         method: 'GET',
         headers: {
@@ -77,7 +78,7 @@ const ProductPage = () => {
         }
       })
         .then((response) => response.json())
-        .then((data) => { setProduct(data) })
+        .then((data) => { setProduct(data);console.log(data)  })
         .catch((error) => console.log(error));
     }
     else {
@@ -85,7 +86,7 @@ const ProductPage = () => {
         method: 'GET'
       })
         .then((response) => response.json())
-        .then((data) => { setProduct(data); })
+        .then((data) => { setProduct(data);})
     }
   };
   
@@ -169,22 +170,23 @@ const ProductPage = () => {
           isAdmin ? <> 
           <Button variant="danger" onClick={handleDelete}>Delete product  </Button>
             <Button variant="warning" onClick={handleAddSize} >Edit product </Button>
-
+            <br/>
+          <label>current product :{product?.id}</label>
           </> : <></>
         }
 
       </CardHeader>
 
       <div className="product-page-container">
-
+      {product ? <> 
         <div className="product-info">
           <img className="product-image" src={imageUrl} />
           <div className="product-data">
             <div className="product-title">
-              {product ? <> {product?.gender.name}'s {product?.brand.name}{" "}
+             {product?.gender.name}'s {product?.brand.name}{" "}
               {product?.category.name.toUpperCase()} {product?.category.typeName}
               <label className="head-big">{product?.name}</label>
-              <label className="head-big">${product?.price}</label></> : <> <label>Loading data</label></>}
+              <label className="head-big">${product?.price}</label>
             </div >
            
             <br />
@@ -230,7 +232,7 @@ const ProductPage = () => {
         
 
 
-
+        </> : <><div className="spinner-container"> <Spinner animation="border"></Spinner></div></>}
       </div>
 
     </Card>

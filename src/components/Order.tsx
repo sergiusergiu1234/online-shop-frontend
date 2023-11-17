@@ -11,9 +11,7 @@ interface Props{
 }
 
 const Order = ({order}:Props)=>{
-    useEffect(()=>{
-        console.log(order.billingName)
-    },[]);
+
     return (<Accordion defaultActiveKey="1">
         <Accordion.Item eventKey="0">
             <Accordion.Button className="order-collapsed">Order - {order.id} - {order.status} </Accordion.Button>
@@ -31,7 +29,7 @@ const Order = ({order}:Props)=>{
                     </thead>
                     <tbody>
             {order.orderDetails.map((detail: OrderDetail) => (
-                    <tr>
+                    <tr key={detail.size+detail.price+detail.quantity+detail.productName}>
                         <td>{detail.productName} {detail.size}</td>
                         <td>{detail.quantity}</td>
                         <td>{detail.price} RON</td>

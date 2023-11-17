@@ -53,7 +53,6 @@ const HomePage = () => {
     const data = await response.json();
     setProducts( data.content);
     setTotalPages(data.totalPages)
-    console.log( await data.content);
   };
 
   useEffect(()=>{
