@@ -64,3 +64,8 @@
   border-radius: 0;
   margin-bottom: 10px;
 }
+.image-spinners{
+  justify-self: center;
+  align-self: center;
+  margin-left: 45%;
+}

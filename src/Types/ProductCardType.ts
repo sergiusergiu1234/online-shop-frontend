@@ -6,7 +6,6 @@ import { Size } from "./Size.types";
 
 export  type ProductCardType = {
     id: number;
-    image: string;
     name: string;
     price: number;
     sizes:Size[];

@@ -13,6 +13,8 @@ const ACCOUNT_URL = "/me";
 
 const AccountPage = () => {
   const { setAuth } = useAuth();
+  const [watchingPersonalData,setWatchingPersonalData] = useState(true);
+  const [watchingOrders,setWatchingOrders] = useState(false);
   const [editing, setEditing] = useState(false);
   const [customer, setCustomer] = useState({
     username: "",
@@ -42,7 +44,7 @@ const AccountPage = () => {
 
     fetchOrders().then((data) => {
       setOrders(data);
-      
+
     });
   }, []);
 
@@ -62,7 +64,7 @@ const AccountPage = () => {
   }, [orders]);
   console.log(pendingOrders);
 
-  
+
   const handleLogout = () => {
     window.localStorage.clear();
     setAuth({
@@ -74,58 +76,53 @@ const AccountPage = () => {
 
   return (
     <div className="account-page">
-     
-        <h1 className="small-title">
-          Personal data
-          <IconContext.Provider value={{ size: "1rem" }}>
-            <Button
-              variant="warning"
-              onClick={() => {
-                if(editing){
-                  setEditing(false);
-                }else{
-                  setEditing(true);  
-                }
-                
-              }}
-            >
-              <MdOutlineModeEdit />
-            </Button>
-          </IconContext.Provider>
-        </h1>
-        {editing ? (
-          <EditAccount />
-        ) : (
-          <p>
-            <label>Name:</label>
-            <label>
-              {customer.firstName} {customer.lastName}
-            </label>{" "}
-            <br />
-            <label>Email:</label> <label>{customer.email}</label> <br />
-            <label>Username:</label>
-            <label>{customer.username}</label> <br />
-            <label>Phone number:</label> <label>{customer.phoneNumber}</label>{" "}
-            <br />
-          </p>
-        )}
+    <h2 className="small-title">
+      Hello, {customer.firstName}
 
-     
-        <h1 className="small-title">Issued orders</h1>
-
-        <div className="issued-orders-section">
-          <h3>Pending orders</h3>
-          {pendingOrders.length > 0 ? (
-            pendingOrders.map((order: OrderType) => (
-              <Order key={order.generationDateTime} order={order} />
-            ))
-          ) : (
-            <p>You have no pending orders</p>
-          )}
        
+      </h2>
+      <div className="account-navbar">
+        <button className="acc-nav-button" onClick={()=>{setWatchingPersonalData(true);setWatchingOrders(false)}}>Personal details</button>
+        <button className="acc-nav-button" onClick={()=>{setWatchingPersonalData(false);setWatchingOrders(true)}}>Orders</button>
+        <button className="acc-nav-button">Contact Support</button>
+        <button className="acc-nav-button">F.A.Q.</button>
+      </div>
+      {watchingPersonalData &&  <div className="account-data-section">
+ 
+     
+        <p>
+          <label>Name:</label>
+          <label>
+            {customer.firstName} {customer.lastName}
+          </label>{" "}
+          <br />
+          <label>Email:</label> <label>{customer.email}</label> <br />
+          <label>Username:</label>
+          <label>{customer.username}</label> <br />
+          <label>Phone number:</label> <label>{customer.phoneNumber}</label>{" "}
+          <br />
+        </p>
+      
+        <Button variant="danger" className="logout-button" onClick={handleLogout}>
+        Log Out
+      </Button>
+      </div>}
+     
+     {watchingOrders && <div className="issued-orders-section">
+      <h1 className="small-title">Issued orders</h1>
+        <div>
+        <h5>Pending orders</h5>
+        {pendingOrders.length > 0 ? (
+          pendingOrders.map((order: OrderType) => (
+            <Order key={order.generationDateTime} order={order} />
+          ))
+        ) : (
+          <p>You have no pending orders</p>
+        )}
+      </div>
 
         <div>
-          <h3>Delivered orders</h3>
+          <h5>Delivered orders</h5>
           {deliveredOrders.length > 0 ? (
             deliveredOrders.map((order: OrderType) => (
               <Order key={order.generationDateTime} order={order} />
@@ -136,7 +133,7 @@ const AccountPage = () => {
         </div>
 
         <div>
-          <h3>Declined orders</h3>
+          <h5>Declined orders</h5>
           {declinedOrders.length > 0 ? (
             declinedOrders.map((order: OrderType) => (
               <Order key={order.generationDateTime} order={order} />
@@ -147,7 +144,7 @@ const AccountPage = () => {
         </div>
 
         <div>
-          <h3>Accepted orders</h3>
+          <h5>Accepted orders</h5>
           {acceptedOrders.length > 0 ? (
             acceptedOrders.map((order: OrderType) => (
               <Order key={order.generationDateTime} order={order} />
@@ -156,12 +153,12 @@ const AccountPage = () => {
             <p>You have no accepted orders.</p>
           )}
         </div>
-        </div>
-        <Button variant="danger" onClick={handleLogout}>
-          Log Out
-        </Button>
       
+      </div>}
+
+
     </div>
   );
+
 };
 export default AccountPage;

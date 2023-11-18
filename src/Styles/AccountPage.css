@@ -1,9 +1,10 @@
 .account-page{
     display: flex;
     flex-direction: column;
-    align-items: center;
+   align-items: center;
+
     background: white;
-    width: 100vw;
+    min-height: 74vh;
 }
 .issued-orders-section{
     display: flex;
@@ -27,6 +28,31 @@
   .accordion-body {
      padding:0
   }
+  .account-navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;;
+    width: 50vw;
+
+  }
+
+  .acc-nav-button {
+    background-color: transparent;
+    color: black;
+    font-weight: 600;
+    border-radius: 0;
+    border: none;
+    font-size: larger;
+    width: 400px;
+  }
+
+  .account-navbar Button:hover{
+    background-color: gray;
+    border-radius:0 ;
+  }
+.logout-button{
+    width: 100px;
+}
   @media screen and (max-width: 960px) {
     .order-collapsed{
         width: 95vw;

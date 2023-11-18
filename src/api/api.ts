@@ -1,8 +1,8 @@
 import { error } from "console";
 import { Attribute } from "../Types/Attribute.types";
 
-//export const API_URL = 'http://localhost:8080';
-export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
+export const API_URL = 'http://localhost:8080';
+//export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
 
 
 export const fetchTypes = async () => {
@@ -525,6 +525,13 @@ export const deleteProductSize = async (productSizeId:number) =>{
     headers:{
       Authorization: `Bearer ${token}`
     }
+  });
+  return response;
+}
+
+export const fetchProductImage = async (productId:number) =>{
+  const response = await fetch(`${API_URL}/products/${productId}/image/download`,{
+    method:'GET'
   });
   return response;
 }
