@@ -2,7 +2,7 @@ import { error } from "console";
 import { Attribute } from "../Types/Attribute.types";
 
 //export const API_URL = 'http://localhost:8080';
-export const API_URL='https://slope-emporium-app-b7686b574df7.herokuapp.com'
+export const API_URL='https://online-shop-backend-b90y.onrender.com'
 
 
 export const fetchTypes = async () => {
@@ -534,4 +534,8 @@ export const fetchProductImage = async (productId:number) =>{
     method:'GET'
   });
   return response;
+}
+
+export const fetchReceivedFriendRequests = () =>{
+  
 }

@@ -24,9 +24,7 @@ const FilterBar = () => {
 };
   const handleShow = () => {
     setShow(true); 
-    fetchTypes().then(data => { setTypes(data);});
-    fetchGenders().then(data => setGenders(data));
-    fetchBrands().then(data => setBrands(data));
+
 };
 
   
@@ -56,7 +54,6 @@ const FilterBar = () => {
   const [sizes, setSizes] = useState<Size[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   let tp = localStorage.getItem("f");
-  const isInitialMount = useRef(true);
   const { setFilter } = useContext(FilterContext);
 
   const handleSearch = () => {
@@ -70,7 +67,8 @@ const FilterBar = () => {
       maxPrice: maxPrice,
       type_name: selectedType?.name || "",
       attributes: mapToString(selectedValues),
-      sizes: selectedSizes
+      sizes: selectedSizes,
+      tp: tp ? tp : '',
     }
     )
 
@@ -92,7 +90,11 @@ const FilterBar = () => {
     setSelectedSizes([]);
   };
 
-
+useEffect(()=>{
+  fetchTypes().then(data => { setTypes(data);});
+  fetchGenders().then(data => setGenders(data));
+  fetchBrands().then(data => setBrands(data));
+},[])
 
   //after we select  a type, reset category, sizes and atribute values
   useEffect(() => {

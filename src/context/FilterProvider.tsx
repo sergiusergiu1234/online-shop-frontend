@@ -9,7 +9,8 @@ export type FilterContent = {
         maxPrice:string,
         type_name:string,
         attributes:string,
-        sizes:string[]
+        sizes:string[],
+        tp:string,
     };
     setFilter: React.Dispatch<React.SetStateAction<FilterContent['filter']>>;
 }
@@ -23,7 +24,8 @@ const FilterContext = createContext<FilterContent>({
         maxPrice:'',
         type_name: "" ,
         attributes:"",
-        sizes:[]
+        sizes:[],
+        tp:''
     },
     setFilter: ()=>{}
 });
@@ -42,7 +44,8 @@ export const FilterProvider =({children}:FilterProviderProps) =>{
         maxPrice:'',
         type_name: "" ,
         attributes:"",
-        sizes:[""]
+        sizes:[""],
+        tp:''
     });
     return (
         <FilterContext.Provider value={{filter,setFilter:setFilter}}>
