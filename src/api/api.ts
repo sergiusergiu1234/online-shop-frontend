@@ -5,6 +5,7 @@ import { Attribute } from "../Types/Attribute.types";
 export const API_URL='https://online-shop-backend-b90y.onrender.com'
 
 
+
 export const fetchTypes = async () => {
     const url = `${API_URL}/types/all`;
     const response = await fetch(url);

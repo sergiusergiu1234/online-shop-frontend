@@ -91,6 +91,7 @@ const FilterBar = () => {
   };
 
 useEffect(()=>{
+  handleSearch();
   fetchTypes().then(data => { setTypes(data);});
   fetchGenders().then(data => setGenders(data));
   fetchBrands().then(data => setBrands(data));
